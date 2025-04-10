@@ -1,38 +1,32 @@
-import nicegui
+import tkinter as tk
+from tkinter import messagebox
 
-# Define your GUI elements and logic here
+# Define your game functions
 def game1():
-    pass
-    # Code for game 1
+    messagebox.showinfo("Game 1", "Game 1")
 
 def game2():
-    pass
-    # Code for game 2
+    messagebox.showinfo("Game 2", "Game 2")
 
 def game3():
-    pass
-    # Code for game 3
+    messagebox.showinfo("Game 3", "Game 3")
 
 def game4():
-    pass
-    # Code for game 4
+    messagebox.showinfo("Game 4", "Game 4")
 
 def game5():
-    pass
-    # Code for game 5
+    messagebox.showinfo("Game 5", "Game 5")
+
+# Create the main window
+root = tk.Tk()
+root.title("Game Selector")
 
 # Create buttons for each game
-button1 = nicegui.Button("Game 1", game1)
-button2 = nicegui.Button("Game 2", game2)
-button3 = nicegui.Button("Game 3", game3)
-button4 = nicegui.Button("Game 4", game4)
-button5 = nicegui.Button("Game 5", game5)
+tk.Button(root, text="Game 1", command=game1).pack(pady=5)
+tk.Button(root, text="Game 2", command=game2).pack(pady=5)
+tk.Button(root, text="Game 3", command=game3).pack(pady=5)
+tk.Button(root, text="Game 4", command=game4).pack(pady=5)
+tk.Button(root, text="Game 5", command=game5).pack(pady=5)
 
-# Create a vertical layout to hold the buttons
-layout = nicegui.VBox(button1, button2, button3, button4, button5)
-
-# Create the main window and set the layout
-window = nicegui.Window("Mini Phone", layout)
-
-# Run the GUI application
-nicegui.app.run()
+# Run the Tkinter event loop
+root.mainloop()
