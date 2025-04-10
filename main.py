@@ -1,32 +1,55 @@
 import tkinter as tk
 from tkinter import messagebox
+import os
+import subprocess
 
-# Define your game functions
-def game1():
-    messagebox.showinfo("Game 1", "Game 1")
+# Function to display project details
 
-def game2():
-    messagebox.showinfo("Game 2", "Game 2")
+# Function to run the selected project
+def run_project(project):
+    games_scripts = {
+        "game": os.path.join(os.path.dirname(os.path.abspath(__file__)), "games", "subdir", "main.py"),
+        "game": os.path.join(os.path.dirname(os.path.abspath(__file__)), "games", "subdir", "main.py"),
+        "game": os.path.join(os.path.dirname(os.path.abspath(__file__)), "games", "subdir", "main.py"),
+        "game": os.path.join(os.path.dirname(os.path.abspath(__file__)), "games", "subdir", "main.py"),
+        "game": os.path.join(os.path.dirname(os.path.abspath(__file__)), "games", "subdir", "main.py"),
+        "game": os.path.join(os.path.dirname(os.path.abspath(__file__)), "games", "subdir", "main.py")
+    }
+    script_path = games_scripts.get(project)
+    if script_path and os.path.exists(script_path):
+        subprocess.run(["python", script_path])
+    else:
+        messagebox.showerror("Error", f"Script for {project} not found!")
 
-def game3():
-    messagebox.showinfo("Game 3", "Game 3")
+# Main application
+def main():
+    root = tk.Tk()
+    root.title("Personal Portfolio")
 
-def game4():
-    messagebox.showinfo("Game 4", "Game 4")
+    # Introduction
+    intro_label = tk.Label(
+        root,
+        text="Welcome to Mini Phone\n\n"
+             "Select a game from the menu to run it.",
+        justify="center",
+        padx=10,
+        pady=10
+    )
+    intro_label.pack()
 
-def game5():
-    messagebox.showinfo("Game 5", "Game 5")
+    # Menu
+    menu_label = tk.Label(root, text="Games", font=("Arial", 14, "bold"))
+    menu_label.pack(pady=10)
 
-# Create the main window
-root = tk.Tk()
-root.title("Game Selector")
+    projects = ["game", "game", "game", "game", "game", "game"]
+    for project in projects:
+        frame = tk.Frame(root)
+        frame.pack(pady=5)
 
-# Create buttons for each game
-tk.Button(root, text="Game 1", command=game1).pack(pady=5)
-tk.Button(root, text="Game 2", command=game2).pack(pady=5)
-tk.Button(root, text="Game 3", command=game3).pack(pady=5)
-tk.Button(root, text="Game 4", command=game4).pack(pady=5)
-tk.Button(root, text="Game 5", command=game5).pack(pady=5)
+        run_button = tk.Button(frame, text=f"Run: {project}", command=lambda p=project: run_project(p))
+        run_button.pack(side="left", padx=5)
 
-# Run the Tkinter event loop
-root.mainloop()
+    root.mainloop()
+
+if __name__ == "__main__":
+    main()
