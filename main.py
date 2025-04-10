@@ -6,7 +6,7 @@ import subprocess
 # Function to display project details
 
 # Function to run the selected project
-def run_project(project):
+def run_game(project):
     games_scripts = {
         "game": os.path.join(os.path.dirname(os.path.abspath(__file__)), "games", "subdir", "main.py"),
         "game": os.path.join(os.path.dirname(os.path.abspath(__file__)), "games", "subdir", "main.py"),
@@ -46,7 +46,7 @@ def main():
         frame = tk.Frame(root)
         frame.pack(pady=5)
 
-        run_button = tk.Button(frame, text=f"Run: {project}", command=lambda p=project: run_project(p))
+        run_button = tk.Button(frame, text=f"Run: {project}", command=lambda p=project: run_game(p))
         run_button.pack(side="left", padx=5)
 
     root.mainloop()
