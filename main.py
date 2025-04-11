@@ -7,7 +7,8 @@ import subprocess
 # Function to run the game
 def run_game(project):
     games_scripts = {
-        "game": os.path.join(os.path.dirname(os.path.abspath(__file__)), "games", "subdir", "main.py"),
+        "game1": os.path.join(os.path.dirname(os.path.abspath(__file__)), "games", "subdir", "main.py"),
+        "chess": os.path.join(os.path.dirname(os.path.abspath(__file__)), "games", "chess", "main.py"),
     }
     script_path = games_scripts.get(project)
     if script_path and os.path.exists(script_path):
@@ -42,14 +43,14 @@ def main():
     else:
         button_image = None  # Fallback if image is not found
 
-    projects = ["game1", "game2", "game3", "game4", "game5"]
+    projects = ["game1", "chess", "game3", "game4", "game5"]
     for project in projects:
         frame = tk.Frame(root)
         frame.pack(pady=5)
 
         run_button = tk.Button(
             frame,
-            text=f"Run: {project}",
+            text=f"{project}",
             image=button_image,
             compound="left",  # Display image to the left of the text
             command=lambda p=project: run_game(p)
