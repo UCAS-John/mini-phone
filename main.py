@@ -34,12 +34,19 @@ def run_game(project):
     else:
         print(f"Error: Script for {project} not found!")
 
-# Draw a button
-def draw_button(screen, text, x, y, width, height, color, hover_color, is_hovered):
+# Draw a button with an optional image
+def draw_button(screen, text, x, y, width, height, color, hover_color, is_hovered, image=None):
     button_color = hover_color if is_hovered else color
     pygame.draw.rect(screen, button_color, (x, y, width, height))
+    
+    # Draw the image if provided
+    if image:
+        image_rect = image.get_rect(center=(x + width // 2, y + height // 2 - 10))  # Adjust position slightly
+        screen.blit(image, image_rect)
+    
+    # Draw the text below the image
     text_surface = FONT.render(text, True, BLACK)
-    text_rect = text_surface.get_rect(center=(x + width // 2, y + height // 2))
+    text_rect = text_surface.get_rect(center=(x + width // 2, y + height // 2 + 30))  # Adjust position slightly
     screen.blit(text_surface, text_rect)
 
 # Main application
@@ -47,12 +54,12 @@ def main():
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     pygame.display.set_caption("Personal Portfolio")
 
-    # Load button image (optional)
+    # Load button image
     image_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "images", "download.png")
     button_image = None
     if os.path.exists(image_path):
         button_image = pygame.image.load(image_path)
-        button_image = pygame.transform.scale(button_image, (50, 50))
+        button_image = pygame.transform.scale(button_image, (50, 50))  # Resize the image to fit the button
 
     # Projects
     projects = ["game1", "chess", "game3", "game4", "game5"]
@@ -77,7 +84,7 @@ def main():
         mouse_pos = pygame.mouse.get_pos()
         for project, x, y in buttons:
             is_hovered = x <= mouse_pos[0] <= x + BUTTON_WIDTH and y <= mouse_pos[1] <= y + BUTTON_HEIGHT
-            draw_button(screen, project, x, y, BUTTON_WIDTH, BUTTON_HEIGHT, GRAY, DARK_GRAY, is_hovered)
+            draw_button(screen, project, x, y, BUTTON_WIDTH, BUTTON_HEIGHT, GRAY, DARK_GRAY, is_hovered, button_image)
 
         # Event handling
         for event in pygame.event.get():
