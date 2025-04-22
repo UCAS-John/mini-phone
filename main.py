@@ -1,10 +1,9 @@
 import tkinter as tk
 from tkinter import messagebox
 import os
-from PIL import Image, ImageTk  # Use PIL for better image support
+from PIL import Image, ImageTk 
 import subprocess
 
-# Function to run the selected project
 def run_game(project):
     games_scripts = {
         "game1": os.path.join(os.path.dirname(os.path.abspath(__file__)), "games", "game1", "main.py"),
@@ -24,10 +23,17 @@ def run_game(project):
 def main():
     root = tk.Tk()
     root.title("Game Launcher")
+    root.geometry("1920x1024")  
 
-    # Title label
     title_label = tk.Label(root, text="Game Launcher", font=("Arial", 16, "bold"))
     title_label.pack(pady=10)
+    
+    root.attributes('-fullscreen', True)
+
+    def end_fullscreen(event):
+        root.attributes('-fullscreen', False)
+
+    root.bind("<Escape>", end_fullscreen)
 
     # Load image for buttons
     image_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "images", "download.png")
