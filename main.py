@@ -27,13 +27,6 @@ def main():
 
     title_label = tk.Label(root, text="Game Launcher", font=("Arial", 16, "bold"))
     title_label.pack(pady=10)
-    
-    root.attributes('-fullscreen', True)
-
-    def end_fullscreen(event):
-        root.attributes('-fullscreen', False)
-
-    root.bind("<Escape>", end_fullscreen)
 
     # Load image for buttons
     image_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "images", "download.png")
