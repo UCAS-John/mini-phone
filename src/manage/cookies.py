@@ -1,5 +1,6 @@
 import os
 from file import read_csv, save_csv
+import pandas as pd
 
 PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "data", "cookies.csv")
 
