@@ -6,11 +6,11 @@ import subprocess
 
 def run_game(project):
     games_scripts = {
-        "game1": os.path.join(os.path.dirname(os.path.abspath(__file__)), "games", "game1", "main.py"),
-        "game2": os.path.join(os.path.dirname(os.path.abspath(__file__)), "games", "game2", "main.py"),
-        "game3": os.path.join(os.path.dirname(os.path.abspath(__file__)), "games", "game3", "main.py"),
-        "game4": os.path.join(os.path.dirname(os.path.abspath(__file__)), "games", "game4", "main.py"),
-        "game5": os.path.join(os.path.dirname(os.path.abspath(__file__)), "games", "game5", "main.py"),
+        "game1": os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', "games", "game1", "main.py"),
+        "game2": os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', "games", "game2", "main.py"),
+        "game3": os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', "games", "game3", "main.py"),
+        "game4": os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', "games", "game4", "main.py"),
+        "game5": os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', "games", "game5", "main.py"),
     }
     script_path = games_scripts.get(project)
 
