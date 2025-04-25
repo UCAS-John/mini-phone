@@ -5,7 +5,7 @@ import pandas as pd
 
 _TYPES = Literal["hangman", "number guessing", "rock paper scissors", "simon", "simple quiz", "tic tace toe"]
 
-PATH = dir_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "data", "scores.csv")
+PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "data", "scores.csv"))
 
 def save_score(username: str, game: _TYPES, score: int):
     data = read_csv(PATH)
