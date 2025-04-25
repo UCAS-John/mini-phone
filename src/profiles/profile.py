@@ -1,9 +1,12 @@
 import pandas as pd 
 import hashlib
-from manage import file
 import os
+import sys
 
-PATH = os.path.join(os.path.dirname(__file__), "..", "..", "data", "users.csv")
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "manage")))
+from manage import file
+
+PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "data", "users.csv"))
 
 def create_profile(username: str, password: str):
     data = file.read_csv(PATH)
@@ -50,3 +53,8 @@ def login_profile(username: str, password: str):
         raise ValueError("Incorrect password.")
     
     return f"Login successful for {username}."
+
+if __name__ == "__main__":
+    print(sys.path)
+    print(create_profile("test_user", "test_password"))
+    print(login_profile("test_user", "test_password"))
