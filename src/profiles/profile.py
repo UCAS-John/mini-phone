@@ -55,6 +55,6 @@ def login_profile(username: str, password: str):
     return f"Login successful for {username}."
 
 if __name__ == "__main__":
-    print(sys.path)
+    print("\n".join(sys.path))
     print(create_profile("test_user", "test_password"))
     print(login_profile("test_user", "test_password"))
