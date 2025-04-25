@@ -14,5 +14,16 @@ def save_score(username: str, game: _TYPES, score: int):
     if game not in data.columns:
         raise ValueError(f"Game '{game}' is not a valid game type.")
 
+    data.loc[data["username"] == username, game] = score
+
+    save_csv(data, PATH)
+
 def load_score(game: _TYPES):
-    raise NotImplementedError("Loading scores is not implemented yet.")
+    data = read_csv(PATH)
+    if data is None:
+        return None
+    if game not in data.columns:
+        data = pd.DataFrame(columns=["username", "hangman", "number guessing", "rock paper scissors", "simon", "simple quiz", "tic tace toe"])
+
+if __name__ == "__main__":
+    save_score("test_user", "hangman", 100)
