@@ -14,8 +14,14 @@ def read_csv(path):
 
 def save_csv(path, data):
     try:
-        df = pd.DataFrame(data)
+        # Check if data is already a DataFrame
+        if isinstance(data, pd.DataFrame):
+            df = data
+        else:
+            df = pd.DataFrame(data)
+        
+        # Save the DataFrame to the CSV file
         df.to_csv(path, index=False)
-        print(f"Data saved to {path}.")
+        # print(f"Data saved to {path}.")
     except Exception as e:
         print(f"Error saving CSV file {path}: {e}")
