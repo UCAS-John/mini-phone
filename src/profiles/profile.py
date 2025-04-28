@@ -48,15 +48,20 @@ def create_profile(username: str, password: str):
 def delete_profile(username: str):
 
     data = file.read_csv(PATH)
+    score = file.read_csv(SCORE_PATH)
 
     if data is None:
+        return
+    if score is None:
         return
     if username not in data["username"].values:
         raise ValueError("Username does not exist.")
     
     data = data[data["username"] != username]
+    score = score[score["username"] != username]
 
-    file.save_csv(data, PATH)
+    file.save_csv(PATH, data)
+    file.save_csv(SCORE_PATH, score)
 
     return f"Profile for {username} deleted successfully."
 
@@ -76,5 +81,6 @@ def login_profile(username: str, password: str):
     return f"Login successful for {username}."
 
 if __name__ == "__main__":
-    print(create_profile("rq", "test_password"))
-    print(login_profile("rq", "test_password"))
+    delete_profile("rq")
+    # print(create_profile("rq", "test_password"))
+    # print(login_profile("rq", "test_password"))
