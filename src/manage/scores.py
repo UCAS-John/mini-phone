@@ -16,7 +16,7 @@ def save_score(username: str, game: _TYPES, score: int):
 
     data.loc[data["username"] == username, game] = score
 
-    save_csv(data, PATH)
+    save_csv(PATH, data)
 
 def load_score(game: _TYPES):
     data = read_csv(PATH)
