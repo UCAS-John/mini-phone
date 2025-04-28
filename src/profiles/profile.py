@@ -7,12 +7,13 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")
 from manage import file
 
 PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "data", "users.csv"))
+SCORE_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "data", "scores.csv"))
 
 def create_profile(username: str, password: str):
     # Hash the password
     hashed_password = hashlib.sha256(password.encode()).hexdigest()
 
-    # Read the CSV file
+    # Read the users CSV file
     try:
         data = pd.read_csv(PATH)
     except Exception as e:
@@ -23,12 +24,25 @@ def create_profile(username: str, password: str):
     if username in data["username"].values:
         return f"Username '{username}' already exists."
 
-    # Add the new user
+    # Add the new user to the users DataFrame
     new_row = pd.DataFrame([{"username": username, "password": hashed_password}])
     data = pd.concat([data, new_row], ignore_index=True)
 
-    # Save the updated DataFrame back to the CSV file
+    # Read the scores CSV file
+    try:
+        score = pd.read_csv(SCORE_PATH)
+    except Exception as e:
+        print(f"Error reading CSV file {SCORE_PATH}: {e}")
+        score = pd.DataFrame(columns=["username", "hangman", "number guessing", "rock paper scissors", "simon", "simple quiz", "tic tace toe"])
+
+    # Initialize user scores
+    new_scores = pd.DataFrame([{"username": username, "hangman": 0, "number guessing": 0, "rock paper scissors": 0, "simon": 0, "simple quiz": 0, "tic tace toe": 0}])
+    score = pd.concat([score, new_scores], ignore_index=True)
+
+    # Save the updated DataFrames back to their respective CSV files
     data.to_csv(PATH, index=False)
+    score.to_csv(SCORE_PATH, index=False)
+
     return f"Profile for '{username}' created successfully."
 
 def delete_profile(username: str):
@@ -62,5 +76,5 @@ def login_profile(username: str, password: str):
     return f"Login successful for {username}."
 
 if __name__ == "__main__":
-    print(create_profile("test_user", "test_password"))
-    print(login_profile("test_user", "test_password"))
+    print(create_profile("rq", "test_password"))
+    print(login_profile("rq", "test_password"))
