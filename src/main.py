@@ -6,7 +6,7 @@ import subprocess
 
 def run_game(project):
     games_scripts = {
-        "game1": os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', "games", "game1", "main.py"),
+        "game1": os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', "games", "Simple_quiz", "main.py"),
         "game2": os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', "games", "game2", "main.py"),
         "game3": os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', "games", "game3", "main.py"),
         "game4": os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', "games", "game4", "main.py"),
