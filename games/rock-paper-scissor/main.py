@@ -1,7 +1,6 @@
 #Alishya Xavier, Profiecency test: Rock, Paper, Scissors
 import random
 
-
 def main():
     score = 0
     comp_score = 0
@@ -37,13 +36,12 @@ def main():
         else:
             print('That is not one of the options')
         
-        choice = input('Would you like to exit the game? y/n\n')
+        choice = input('What would you like to do:\n1. Play again\n2. Display top 5 scores\n3. Exit\nChoice: ')
+        #Add it to all of the profiles who have used the phone
         if choice == 'y':
             print('Your final score is:',score)
             print('The computers final score is:', comp_score)
             break
         else:
             continue
-
-if __name__ == "__main__":
-    main()
+    return score
