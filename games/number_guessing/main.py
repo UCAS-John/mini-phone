@@ -15,9 +15,18 @@ def main():
 
     while True:
 
-        rand_num = random.randint(1,1000000)
+        rand_num = random.randint(1,1000)
 
         num_guess=("what is your guess for the number?? ")
+
+        if num_guess == rand_num:
+            print("you got it that was a one in a million chance. now you should go find the bible in the code. one of the magic numbers will print the whole bible.")
+
+        elif num_guess == 429:
+            print("bible goes here")
+        elif num_guess == 62:
+            print("Lord Faraad")
+        elif num_guess == 145:
 
 
 if __name__ == "__main__":
