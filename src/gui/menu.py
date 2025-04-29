@@ -4,6 +4,7 @@ import os
 from PIL import Image, ImageTk
 import subprocess
 from profiles.profile import create_profile, delete_profile, login_profile
+from manage.scores import load_all
 
 # Paths for images and game scripts
 IMAGE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "images")
@@ -22,13 +23,13 @@ class Menu:
     def __init__(self, root):
         self.root = root
         self.root.title("Game Launcher")
-        self.root.geometry("800x600")
+        self.root.geometry("1200x800")
         self.current_user = None
 
         # Initialize UI
-        self.create_login_screen()
+        self.login_screen()
 
-    def create_login_screen(self):
+    def login_screen(self):
         """Create the login screen."""
         self.clear_screen()
 
@@ -45,7 +46,7 @@ class Menu:
         tk.Button(self.root, text="Login", font=("Arial", 14), command=self.login).pack(pady=10)
         tk.Button(self.root, text="Create Profile", font=("Arial", 14), command=self.create_profile_screen).pack(pady=10)
 
-    def create_main_menu(self):
+    def main_menu(self):
         """Create the main menu after login."""
         self.clear_screen()
 
@@ -95,7 +96,7 @@ class Menu:
         self.new_password_entry.pack(pady=5)
 
         tk.Button(self.root, text="Create", font=("Arial", 14), command=self.create_profile).pack(pady=20)
-        tk.Button(self.root, text="Back to Login", font=("Arial", 14), command=self.create_login_screen).pack(pady=10)
+        tk.Button(self.root, text="Back to Login", font=("Arial", 14), command=self.login_screen).pack(pady=10)
 
     def clear_screen(self):
         """Clear all widgets from the screen."""
@@ -110,15 +111,15 @@ class Menu:
         try:
             message = login_profile(username, password)
             self.current_user = username
-            messagebox.showinfo("Login Successful", message)
-            self.create_main_menu()
+            # messagebox.showinfo("Login Successful", message) # Test
+            self.main_menu()
         except ValueError as e:
             messagebox.showerror("Login Failed", str(e))
 
     def logout(self):
         """Handle user logout."""
         self.current_user = None
-        self.create_login_screen()
+        self.login_screen()
 
     def create_profile(self):
         """Handle profile creation."""
@@ -131,7 +132,7 @@ class Menu:
 
         message = create_profile(username, password)
         messagebox.showinfo("Profile Created", message)
-        self.create_login_screen()
+        self.login_screen()
 
     def delete_profile(self):
         """Handle profile deletion."""
@@ -149,3 +150,7 @@ class Menu:
             subprocess.run(["python", script_path])
         else:
             messagebox.showerror("Error", f"Game script not found: {script_path}")
+    
+    def show_score(self):
+        root = tk.Tk()
+        scores = load_all(self.current_user)

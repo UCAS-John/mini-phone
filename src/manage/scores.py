@@ -31,6 +31,15 @@ def load_score(username, game: _TYPES):
         return None
     return data.iloc[0][game]
 
+def load_all(username):
+    data = read_csv(PATH)
+    if data is None:
+        return None
+    data = data[data["username"] == username]
+    if data.empty:
+        return None
+    return data.iloc[0].to_dict()
+
 if __name__ == "__main__":
     save_score("test_user", "hangman", 100)
     print(load_score("test_user", "hangman"))
