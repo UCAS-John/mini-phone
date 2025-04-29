@@ -19,6 +19,8 @@ while True:
 
             #quiz part will go here
 
+            break
+
         else: print("brotha it ain't that hard to press space and enter. do it again!! ")
 
     elif start == "2":
@@ -29,6 +31,8 @@ while True:
 
         #quiz part will go here
 
+        break
+
     elif start == "3":
         start = input(" you chose the easy level, this quiz is close note, internet and friend. press space and then enter when you are ready.")
         if start == " ":
@@ -36,6 +40,8 @@ while True:
         else: print("brotha it ain't that hard to press space and enter. do it again!! ")
 
         #quiz part will go here
+
+        break
     
     else:
         break
