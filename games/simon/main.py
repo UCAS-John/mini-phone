@@ -1,7 +1,10 @@
-import random
+import tkinter as tk
+from simon import SimonGame
 
 def main():
-    raise NotImplementedError("This game is not implemented yet.")
+    root = tk.Tk()
+    game = SimonGame(root)
+    root.mainloop()
 
 if __name__ == "__main__":
     main()
