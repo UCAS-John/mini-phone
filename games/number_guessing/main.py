@@ -11,5 +11,14 @@ def main():
 
 """)
     
+    print("welcome to the number guessing game this game is very simple you keep guessing numbers till you get the right one. (if you want to leave at any given point in time input done.)")
+
+    while True:
+
+        rand_num = random.randint(1,1000000)
+
+        num_guess=("what is your guess for the number?? ")
+
+
 if __name__ == "__main__":
     main()
