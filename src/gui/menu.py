@@ -3,6 +3,9 @@ from tkinter import messagebox
 import os
 from PIL import Image, ImageTk
 import subprocess
+import sys
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from profiles.profile import create_profile, delete_profile, login_profile
 from manage.scores import load_all
 
@@ -80,6 +83,8 @@ class Menu:
         tk.Button(self.root, text="Logout", font=("Arial", 14), command=self.logout).pack(pady=20)
         # Delete profile button
         tk.Button(self.root, text="Delete Profile", font=("Arial", 14), command=self.delete_profile).pack(pady=10)
+        # Show score button
+        tk.Button(self.root, text="Show Score", font=("Arial", 14), command=self.show_score).pack(pady=10)
 
     def create_profile_screen(self):
         """Create the profile creation screen."""
@@ -153,4 +158,20 @@ class Menu:
     
     def show_score(self):
         root = tk.Tk()
+        root.title(f"{self.current_user} Scoreboard")
+        root.geometry("600x400")
         scores = load_all(self.current_user)
+
+        print(scores)
+
+        for game, score in scores.items():
+            if game == "username":
+                continue
+            tk.Label(root, text=f"{game}: {score}", font=("Arial", 14)).pack(pady=5)
+
+        root.mainloop()
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    menu = Menu(root)
+    root.mainloop()
