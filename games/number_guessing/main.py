@@ -1,5 +1,7 @@
 import random
 
+score = 0
+
 # Rando mTemplate jus remove it
 def main():
     print("""
@@ -17,17 +19,38 @@ def main():
 
         rand_num = random.randint(1,1000)
 
-        num_guess=("what is your guess for the number?? ")
+        num_guess=int(input("what is your guess for the number?? "))
+
+#        if num_guess != int:
+#            print("bud, choose a number it ain't that hard. 😊")
+        
 
         if num_guess == rand_num:
             print("you got it that was a one in a million chance. now you should go find the bible in the code. one of the magic numbers will print the whole bible.")
 
-        elif num_guess == 429:
+        elif num_guess == 123:
             print("bible goes here")
-        elif num_guess == 62:
-            print("Lord Faraad")
+        elif num_guess == 429:
+            print(""" IS that.. glitter on your lips?
+                MMMM cherry flavoured... want a taste?
+                    """)
         elif num_guess == 145:
+            print("hatred does not cease by hatred, but only by love this is the eternal rule.")
+        elif num_guess == 324:
+            print("""King Julien - Maurice is right you can't run around like a footless chicken
+                  Maurice - headless chichen you majesty
+                  King Julien - uh no how's a chicken supposed to without a head
+                  Maurice - how's it run around without feet?
+                  King Julien - I'm not a chicken Maurice, WHY ARE YOU ASKING ME ALL THIS QUESTION??
+                  Mort - Oh I hate it when mommy and daddy fight WAHHHHH...
+                  """)
+        elif num_guess > rand_num:
+            print("your number is tooo high.")
+            score += 1
 
+        elif num_guess < rand_num:
+            print("your number is too small")
+            score += 1
 
 if __name__ == "__main__":
     main()
