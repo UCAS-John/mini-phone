@@ -1,7 +1,6 @@
 import random
 
 #Working on it
-#Alishya Xavier, TicTacToe project
 import random
 
 def print_board(board):
@@ -71,8 +70,3 @@ def play_game():
 if __name__ == "__main__":
    play_game()
 
-def main():
-    raise NotImplementedError("This game is not implemented yet.")
-
-if __name__ == "__main__":
-    main()
