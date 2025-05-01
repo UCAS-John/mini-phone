@@ -36,12 +36,14 @@ def main():
         else:
             print('That is not one of the options')
         
-        choice = input('What would you like to do:\n1. Play again\n2. Display top 5 scores\n3. Exit\nChoice: ')
-        #Add it to all of the profiles who have used the phone
-        if choice == 'y':
+        choice = input('What would you like to do:\n1. Play again\n2. Exit\nChoice: ')
+        if choice == '1':
+            continue
+        elif choice == '2':
             print('Your final score is:',score)
             print('The computers final score is:', comp_score)
-            break
+            return score
         else:
+            print('That is not an option')
             continue
-    return score
+    
