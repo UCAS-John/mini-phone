@@ -1,5 +1,5 @@
 import os
-from manage.file import read_csv, save_csv
+from file import read_csv, save_csv
 from typing import Literal
 import pandas as pd
 
@@ -40,6 +40,19 @@ def load_all(username):
         return None
     return data.iloc[0].to_dict()
 
+def load_top(n=5):
+    data = read_csv(PATH)
+    if data is None:
+        return None
+    top_scores = pd.DataFrame()
+    for game in data.columns[1:]:
+        if game != 'username':
+            top_scores[game] = data.sort_values(by=[game]).head(5)["username"].reset_index(drop=True)
+    return top_scores
+
 if __name__ == "__main__":
-    save_score("test_user", "hangman", 100)
-    print(load_score("test_user", "hangman"))
+    
+    data = read_csv(PATH)
+    print(data.to_string())
+    data = load_top()
+    print(data.to_string())
