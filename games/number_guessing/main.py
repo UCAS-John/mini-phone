@@ -4,6 +4,7 @@ score = 0
 
 # Rando mTemplate jus remove it
 def main():
+    rand_num = random.randint(1,1000)
     print("""
 
  ____ ____ ____ ____ ____ ____ _________ ____ ____ ____ ____ ____ ____ ____ ____ _________ ____ ____ ____ ____ ____ ____ ____ ____ 
@@ -17,8 +18,6 @@ def main():
 
     while True:
 
-        rand_num = random.randint(1,1000)
-
         num_guess=int(input("what is your guess for the number?? "))
 
 #        if num_guess != int:
@@ -26,10 +25,11 @@ def main():
         
 
         if num_guess == rand_num:
-            print("you got it that was a one in a million chance. now you should go find the bible in the code. one of the magic numbers will print the whole bible.")
-
+            print("you got it that was a one in a thousand chance. now you should go find the bible in the code. one of the magic numbers will print the whole bible.")
+            print(score)
+            break
         elif num_guess == 123:
-            print("bible goes here")
+            print("I wish I could have put the bible here bible, the enitre thing.")
         elif num_guess == 429:
             print(""" IS that.. glitter on your lips?
                 MMMM cherry flavoured... want a taste?
