@@ -12,12 +12,12 @@ from manage.scores import load_all, load_top
 # Paths for images and game scripts
 IMAGE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "images")
 GAMES_SCRIPTS = {
-    "Battle Simulator": os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', "games", "battle_simulator", "main.py"),
+    # "Battle Simulator": os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', "games", "battle_simulator", "main.py"), # Remove this game
     "Cookie Clicker": os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', "games", "cookie_clicker", "main.py"),
     "Hangman": os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', "games", "Hangman", "main.py"),
     "Number Guessing": os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', "games", "number_guessing", "main.py"),
     "Rock Paper Scissors": os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', "games", "rock_paper_scissors", "main.py"),
-    "Simon Game": os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', "games", "simon", "main.py"),
+    "Simon": os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', "games", "simon", "main.py"),
     "Simple Quiz": os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', "games", "Simple_quiz", "main.py"),
     "Tic Tac Toe": os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', "games", "Tic_Tac_Toe", "main.py")
 }
@@ -94,7 +94,8 @@ class Menu:
             except IndexError:
                 top_score_text = "Top Score: N/A"
             except KeyError:
-                top_score_text = "No Top score for this game"
+                # top_score_text = "No Top score for this game"
+                top_score_text = ""
 
             top_score_label = tk.Label(game_frame, text=top_score_text, font=("Arial", 10))
             top_score_label.grid(row=row + 1, column=col, pady=(0, 10))
