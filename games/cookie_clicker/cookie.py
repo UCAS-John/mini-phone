@@ -50,16 +50,18 @@ class CookieClicker:
         self.update_cookies_per_second()
 
     def create_ui(self):
-        """Create the user interface."""
+        # Create the user interface.
+
         # Cookie display
         self.cookie_label = tk.Label(self.root, text=f"Cookies: {self.cookies:.1f}", font=("Arial", 20))
         self.cookie_label.pack(pady=10)
 
         # Cookie button
-        cookie_image = Image.open(COOKIE_IMAGE_PATH).resize((150, 150))
-        self.cookie_photo = ImageTk.PhotoImage(cookie_image)
+        image = Image.open(COOKIE_IMAGE_PATH)
+        self.cookie_photo = ImageTk.PhotoImage(image)
         self.cookie_button = tk.Button(self.root, image=self.cookie_photo, command=self.click_cookie)
-        self.cookie_button.pack(pady=10)
+        self.cookie_button.image = self.cookie_photo  # Prevent garbage collection
+        self.cookie_button.pack(side="top", pady=10)
 
         # Buildings frame
         self.buildings_frame = tk.Frame(self.root)

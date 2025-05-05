@@ -55,6 +55,8 @@ class Menu:
 
         tk.Label(self.root, text=f"Welcome, {self.current_user}!", font=("Arial", 20, "bold")).pack(pady=20)
 
+        tk.Label(self.root, text="Be aware some of the game run on terminal!", font=("Arial", 16)).pack(pady=10)
+
         # Create a frame for game buttons
         game_frame = tk.Frame(self.root)
         game_frame.pack(pady=20)
