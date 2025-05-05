@@ -83,11 +83,18 @@ class Menu:
 
             # Add top score label below the button
             top_scores = load_top()  # Load top scores as a DataFrame
+            top_score_text = f"Top Score:\n"
             try:
-                top_score_data = top_scores.iloc[row * 5 + col]  # Get the top score based on iteration index
-                top_score_text = f"Top Score: {top_score_data[1]} by {top_score_data[0]}"
+                top_score_data = top_scores[game_name.lower()]  # Get the top score based on iteration index
+                # print(top_score_data)
+                # print(top_score_data.to_string())
+                for pair in top_score_data:   
+                    text = f"{pair[0]}: {pair[1]}"
+                    top_score_text += f"{text}\n"
             except IndexError:
                 top_score_text = "Top Score: N/A"
+            except KeyError:
+                top_score_text = "No Top score for this game"
 
             top_score_label = tk.Label(game_frame, text=top_score_text, font=("Arial", 10))
             top_score_label.grid(row=row + 1, column=col, pady=(0, 10))
@@ -210,8 +217,8 @@ class Menu:
         root.mainloop()
 
     def show_top_scores(self):
-        """Display the top 5 scores for each game in a new window."""
-        top_scores = load_top()  # Assuming load_top fetches top scores for all games
+        # Display the top 5 scores for each game in a new window.
+        top_scores = load_top()  
 
         # Create a new window
         top_scores_window = tk.Toplevel(self.root)
