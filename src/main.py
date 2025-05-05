@@ -1,8 +1,8 @@
 import tkinter as tk
-from gui import menu
-def main():
-    root = tk.Tk()
-    app = menu.Menu(root)
-    root.mainloop()
+from gui.menu import Menu
 
-main()
+root = tk.Tk()
+app = Menu(root)
+
+if __name__ == "__main__":
+    root.mainloop()
