@@ -55,11 +55,13 @@ class Menu:
 
         tk.Label(self.root, text=f"Welcome, {self.current_user}!", font=("Arial", 20, "bold")).pack(pady=20)
 
-        # Create game buttons
-        for game_name, script_path in GAMES_SCRIPTS.items():
-            frame = tk.Frame(self.root)
-            frame.pack(pady=10)
+        # Create a frame for game buttons
+        game_frame = tk.Frame(self.root)
+        game_frame.pack(pady=20)
 
+        # Create game buttons with a row limit of 5
+        row, col = 0, 0
+        for game_name, script_path in GAMES_SCRIPTS.items():
             # Load button image
             image_path = os.path.join(IMAGE_DIR, f"{game_name.replace(' ', '_').lower()}.png")
             if os.path.exists(image_path):
@@ -69,22 +71,58 @@ class Menu:
 
             # Create button
             button = tk.Button(
-                frame,
+                game_frame,
                 text=game_name,
                 image=button_image,
-                compound="left",
-                font=("Arial", 14),
+                compound="top",
+                font=("Arial", 12),
                 command=lambda path=script_path: self.run_game(path)
             )
             button.image = button_image  # Keep a reference to avoid garbage collection
-            button.pack(side="left", padx=10)
+            button.grid(row=row, column=col, padx=10, pady=10)
 
-        # Logout button
-        tk.Button(self.root, text="Logout", font=("Arial", 14), command=self.logout).pack(pady=20)
-        # Delete profile button
-        tk.Button(self.root, text="Delete Profile", font=("Arial", 14), command=self.delete_profile).pack(pady=10)
-        # Show score button
-        tk.Button(self.root, text="Show Score", font=("Arial", 14), command=self.show_score).pack(pady=10)
+            # Add top score label below the button
+            top_scores = load_top()  # Load top scores as a DataFrame
+            try:
+                top_score_data = top_scores.iloc[row * 5 + col]  # Get the top score based on iteration index
+                top_score_text = f"Top Score: {top_score_data[1]} by {top_score_data[0]}"
+            except IndexError:
+                top_score_text = "Top Score: N/A"
+
+            top_score_label = tk.Label(game_frame, text=top_score_text, font=("Arial", 10))
+            top_score_label.grid(row=row + 1, column=col, pady=(0, 10))
+
+            col += 1
+            if col == 5:  # Move to the next row after 5 buttons
+                col = 0
+                row += 2
+
+        # Create a frame for the "Show Score" button (beneath the game buttons)
+        score_button_frame = tk.Frame(self.root)
+        score_button_frame.pack(pady=20)
+
+        # "Show Score" button
+        tk.Button(score_button_frame, text="Show Score", font=("Arial", 14), command=self.show_score).pack()
+
+        # Create a frame for bottom buttons (aligned horizontally)
+        bottom_buttons_frame = tk.Frame(self.root)
+        bottom_buttons_frame.pack(side="bottom", pady=20, fill="x")
+
+        # "Delete Profile" button on the bottom right corner
+        delete_profile_button = tk.Button(
+            bottom_buttons_frame, text="Delete Profile", font=("Arial", 14), command=self.delete_profile
+        )
+        delete_profile_button.pack(side="right", padx=10, anchor="se")
+
+        # Create a separate frame for the "Logout" button
+        logout_button_frame = tk.Frame(self.root)
+        logout_button_frame.pack(side="bottom", pady=10)
+
+        # "Logout" button in the bottom middle
+        logout_button = tk.Button(
+            logout_button_frame, text="Logout", font=("Arial", 14), command=self.logout
+        )
+        logout_button.pack()
 
     def create_profile_screen(self):
         """Create the profile creation screen."""
@@ -178,7 +216,7 @@ class Menu:
         # Create a new window
         top_scores_window = tk.Toplevel(self.root)
         top_scores_window.title("Top 5 Scores")
-        top_scores_window.geometry("600x400")
+        top_scores_window.geometry("1200x900")
 
         tk.Label(top_scores_window, text="Top 5 Scores", font=("Arial", 20, "bold")).pack(pady=20)
 
