@@ -44,11 +44,13 @@ def load_top(n=5):
     data = read_csv(PATH)
     if data is None:
         return None
-    top_scores = pd.DataFrame()
+    top_scores = {}
     for game in data.columns[1:]:
         if game != 'username':
-            top_scores[game] = data.sort_values(by=[game]).head(5)["username"].reset_index(drop=True)
-    return top_scores
+            # Sort by score in descending order, handle NaN values, and select top n
+            sorted_data = data.sort_values(by=[game], ascending=False, na_position='last')
+            top_scores[game] = list(zip(sorted_data.head(n)["username"], sorted_data.head(n)[game]))
+    return pd.DataFrame.from_dict(top_scores, orient='index').transpose()
 
 if __name__ == "__main__":
     
