@@ -7,7 +7,7 @@ import sys
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from profiles.profile import create_profile, delete_profile, login_profile
-from manage.scores import load_all
+from manage.scores import load_all, load_top
 
 # Paths for images and game scripts
 IMAGE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "images")
@@ -170,6 +170,25 @@ class Menu:
             tk.Label(root, text=f"{game}: {score}", font=("Arial", 14)).pack(pady=5)
 
         root.mainloop()
+
+    def show_top_scores(self):
+        """Display the top 5 scores for each game in a new window."""
+        top_scores = load_top()  # Assuming load_top fetches top scores for all games
+
+        # Create a new window
+        top_scores_window = tk.Toplevel(self.root)
+        top_scores_window.title("Top 5 Scores")
+        top_scores_window.geometry("600x400")
+
+        tk.Label(top_scores_window, text="Top 5 Scores", font=("Arial", 20, "bold")).pack(pady=20)
+
+        # Display the top scores for each game
+        for game, scores in top_scores.items():
+            tk.Label(top_scores_window, text=f"{game}", font=("Arial", 16, "bold")).pack(pady=10)
+            for username, score in scores:
+                tk.Label(top_scores_window, text=f"{username}: {score}", font=("Arial", 14)).pack()
+
+        tk.Button(top_scores_window, text="Close", font=("Arial", 14), command=top_scores_window.destroy).pack(pady=20)
 
 if __name__ == "__main__":
     root = tk.Tk()
