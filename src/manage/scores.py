@@ -10,7 +10,7 @@ PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "data
 def save_score(username: str, game: _TYPES, score: int):
     data = read_csv(PATH)
     if data is None:
-        data = pd.DataFrame(columns=["username", "hangman", "number guessing", "rock paper scissors", "simon", "simple quiz", "tic tace toe"])
+        data = pd.DataFrame(columns=["username", "hangman", "number guessing", "rock paper scissors", "simon", "simple quiz", "tic tac toe", "simon"])
     if game not in data.columns:
         raise ValueError(f"Game '{game}' is not a valid game type.")
 
@@ -23,7 +23,7 @@ def load_score(username, game: _TYPES):
     if data is None:
         return None
     if game not in data.columns:
-        data = pd.DataFrame(columns=["username", "hangman", "number guessing", "rock paper scissors", "simon", "simple quiz", "tic tace toe"])
+        data = pd.DataFrame(columns=["username", "hangman", "number guessing", "rock paper scissors", "simon", "simple quiz", "tic tac toe", "simon"])
 
     data = data[data["username"] == username]
 
@@ -40,6 +40,21 @@ def load_all(username):
         return None
     return data.iloc[0].to_dict()
 
+def load_top(n=5):
+    data = read_csv(PATH)
+    if data is None:
+        return None
+    top_scores = {}
+    for game in data.columns[1:]:
+        if game != 'username':
+            # Sort by score in descending order, handle NaN values, and select top n
+            sorted_data = data.sort_values(by=[game], ascending=False, na_position='last')
+            top_scores[game] = list(zip(sorted_data.head(n)["username"], sorted_data.head(n)[game]))
+    return pd.DataFrame.from_dict(top_scores, orient='index').transpose()
+
 if __name__ == "__main__":
-    save_score("test_user", "hangman", 100)
-    print(load_score("test_user", "hangman"))
+    
+    data = read_csv(PATH)
+    print(data.to_string())
+    data = load_top()
+    print(data.to_string())
