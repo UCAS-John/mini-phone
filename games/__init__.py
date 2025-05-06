@@ -1,7 +1,5 @@
 import random
 
-#Working on it
-import random
 
 def print_board(board):
 #This is the function that prints the tic tac toe board
