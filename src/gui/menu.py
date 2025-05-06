@@ -77,6 +77,7 @@ class Menu:
                 text=game_name,
                 image=button_image,
                 compound="top",
+                bg="light blue",                
                 font=("Arial", 12),
                 command=lambda path=script_path: self.run_game(path)
             )
@@ -112,7 +113,7 @@ class Menu:
         score_button_frame.pack(pady=20)
 
         # "Show Score" button
-        tk.Button(score_button_frame, text="Show Score", font=("Arial", 14), command=self.show_score).pack()
+        tk.Button(score_button_frame, text="Show Personal Score", font=("Arial", 14), command=self.show_score).pack()
 
         # Create a frame for bottom buttons (aligned horizontally)
         bottom_buttons_frame = tk.Frame(self.root)
