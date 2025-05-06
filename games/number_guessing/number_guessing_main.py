@@ -1,5 +1,7 @@
 import random
 
+# import num_gess_score as scores
+
 score = 0
 
 # Rando mTemplate jus remove it
@@ -20,13 +22,14 @@ def main(score):
 
         num_guess=int(input("what is your guess for the number?? "))
 
-        if num_guess != int:
+        if not isinstance(num_guess, int):
             print("bud, choose a number it ain't that hard. 😊")
         
 
         if num_guess == rand_num:
             print("you got it that was a one in a thousand chance. now you should go find the bible in the code. one of the magic numbers will print the whole bible.")
             print("your score was ",score)
+
             break
         elif num_guess == 123:
             print("I wish I could have put the bible here bible, the enitre thing.")
