@@ -2,14 +2,13 @@
 from faker import Faker
 
 fake = Faker()
-rand_word = fake.word().lower()
 
-def word(rand_word):
-    score = 0
+
+def word(score):
+    rand_word = fake.word().lower()
     wordy = list(rand_word)
     letters = ['_|' for _ in wordy]
-    while True:
-        guesser(letters, wordy, score)
+    guesser(letters, wordy, score)
 
 def guesser(letters, wordy, score):
     guessed_letters = set()
@@ -40,16 +39,49 @@ def guesser(letters, wordy, score):
                     letters[i] = ask + '|'
         else:
             print("Incorrect guess.")
-            wrong_guesses += 1
+            wrong_guesses+=1
 
     if '_|' not in letters:
         print("\nCongratulations! You guessed the word correctly!" )
+        score+=1
+        print(f'your score is: ', score) 
+        play= input("do you want to play again (y/n): ").lower()
+        if play == 'yes' or play == 'y':
+            word(score)
+        elif play == 'no' or play == 'n':
+            print("Thanks for playing! ")
+            #Call the save score function and save the score
+            return
+        else:
+            print("PICK A VALID INPUT. Exiting game...")
+            #Call the save score function and save the score
+            return
+            
+
 
     else:
         print("\nLOSER!💀 You ran out of guesses. The word was:", end=' ')
+        print(f'your score is: ', score) 
         for ch in wordy:
             print(ch, end='')
-        print()
+        play= input("\nDo you want to play again (y/n): ").lower()
+        if play == 'yes' or play == 'y':
+            word()
+        elif play == 'no' or play == 'n':
+            print("Thanks for playing! ")
+            #Call the save score function and save the score
+            return
 
+def main():
+    print("insert the hangman font thingy")
+    while True:
+        options = input("what would you like to do?\n1) play\n2) exit\n")
+        if options == '1':
+            score = 0
+            word(score)
+        elif options == '2':
+            break
+        else:
+            print("Pick a valid choice.")
 
-word(rand_word)
+main()
