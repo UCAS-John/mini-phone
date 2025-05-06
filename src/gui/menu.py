@@ -3,20 +3,23 @@ from tkinter import messagebox
 import os
 from PIL import Image, ImageTk
 import subprocess
+import sys
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from profiles.profile import create_profile, delete_profile, login_profile
-from manage.scores import load_all
+from manage.scores import load_all, load_top
 
 # Paths for images and game scripts
 IMAGE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "images")
 GAMES_SCRIPTS = {
-    "Battle Simulator": os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', "games", "battle_simulator", "main.py"),
-    "Cookie Clicker": os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', "games", "cookie_clicker", "main.py"),
-    "Hangman": os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', "games", "Hangman", "main.py"),
-    "Number Guessing": os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', "games", "number_guessing", "main.py"),
-    "Rock Paper Scissors": os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', "games", "rock_paper_scissors", "main.py"),
-    "Simon Game": os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', "games", "simon", "main.py"),
-    "Simple Quiz": os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', "games", "Simple_quiz", "main.py"),
-    "Tic Tac Toe": os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', "games", "Tic_Tac_Toe", "main.py")
+    # "Battle Simulator": os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', "games", "battle_simulator", "main.py"), # Remove this game
+    "Cookie Clicker": os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', "games", "cookie_clicker", "cookie_main.py"),
+    "Hangman": os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', "games", "Hangman", "hangman_main.py"),
+    "Number Guessing": os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', "games", "number_guessing", "number_guessing_main.py"),
+    "Rock Paper Scissors": os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', "games", "rock_paper_scissors", "rps_main.py"),
+    "Simon": os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', "games", "simon", "simon_main.py"),
+    "Simple Quiz": os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', "games", "Simple_quiz", "quiz_main.py"),
+    "Tic Tac Toe": os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', "games", "Tic_Tac_Toe", "tic_tac_toe_main.py")
 }
 
 class Menu:
@@ -52,11 +55,15 @@ class Menu:
 
         tk.Label(self.root, text=f"Welcome, {self.current_user}!", font=("Arial", 20, "bold")).pack(pady=20)
 
-        # Create game buttons
-        for game_name, script_path in GAMES_SCRIPTS.items():
-            frame = tk.Frame(self.root)
-            frame.pack(pady=10)
+        tk.Label(self.root, text="Be aware some of the game run on terminal!", font=("Arial", 16)).pack(pady=10)
 
+        # Create a frame for game buttons
+        game_frame = tk.Frame(self.root)
+        game_frame.pack(pady=20)
+
+        # Create game buttons with a row limit of 5
+        row, col = 0, 0
+        for game_name, script_path in GAMES_SCRIPTS.items():
             # Load button image
             image_path = os.path.join(IMAGE_DIR, f"{game_name.replace(' ', '_').lower()}.png")
             if os.path.exists(image_path):
@@ -66,20 +73,66 @@ class Menu:
 
             # Create button
             button = tk.Button(
-                frame,
+                game_frame,
                 text=game_name,
                 image=button_image,
-                compound="left",
-                font=("Arial", 14),
+                compound="top",
+                font=("Arial", 12),
                 command=lambda path=script_path: self.run_game(path)
             )
             button.image = button_image  # Keep a reference to avoid garbage collection
-            button.pack(side="left", padx=10)
+            button.grid(row=row, column=col, padx=10, pady=10)
 
-        # Logout button
-        tk.Button(self.root, text="Logout", font=("Arial", 14), command=self.logout).pack(pady=20)
-        # Delete profile button
-        tk.Button(self.root, text="Delete Profile", font=("Arial", 14), command=self.delete_profile).pack(pady=10)
+            # Add top score label below the button
+            top_scores = load_top()  # Load top scores as a DataFrame
+            top_score_text = f"Top Score:\n"
+            try:
+                top_score_data = top_scores[game_name.lower()]  # Get the top score based on iteration index
+                # print(top_score_data)
+                # print(top_score_data.to_string())
+                for pair in top_score_data:   
+                    text = f"{pair[0]}: {pair[1]}"
+                    top_score_text += f"{text}\n"
+            except IndexError:
+                top_score_text = "Top Score: N/A"
+            except KeyError:
+                # top_score_text = "No Top score for this game"
+                top_score_text = ""
+
+            top_score_label = tk.Label(game_frame, text=top_score_text, font=("Arial", 10))
+            top_score_label.grid(row=row + 1, column=col, pady=(0, 10))
+
+            col += 1
+            if col == 5:  # Move to the next row after 5 buttons
+                col = 0
+                row += 2
+
+        # Create a frame for the "Show Score" button (beneath the game buttons)
+        score_button_frame = tk.Frame(self.root)
+        score_button_frame.pack(pady=20)
+
+        # "Show Score" button
+        tk.Button(score_button_frame, text="Show Score", font=("Arial", 14), command=self.show_score).pack()
+
+        # Create a frame for bottom buttons (aligned horizontally)
+        bottom_buttons_frame = tk.Frame(self.root)
+        bottom_buttons_frame.pack(side="bottom", pady=20, fill="x")
+
+        # "Delete Profile" button on the bottom right corner
+        delete_profile_button = tk.Button(
+            bottom_buttons_frame, text="Delete Profile", font=("Arial", 14), command=self.delete_profile
+        )
+        delete_profile_button.pack(side="right", padx=10, anchor="se")
+
+        # Create a separate frame for the "Logout" button
+        logout_button_frame = tk.Frame(self.root)
+        logout_button_frame.pack(side="bottom", pady=10)
+
+        # "Logout" button in the bottom middle
+        logout_button = tk.Button(
+            logout_button_frame, text="Logout", font=("Arial", 14), command=self.logout
+        )
+        logout_button.pack()
 
     def create_profile_screen(self):
         """Create the profile creation screen."""
@@ -153,4 +206,39 @@ class Menu:
     
     def show_score(self):
         root = tk.Tk()
+        root.title(f"{self.current_user} Scoreboard")
+        root.geometry("600x400")
         scores = load_all(self.current_user)
+
+        print(scores)
+
+        for game, score in scores.items():
+            if game == "username":
+                continue
+            tk.Label(root, text=f"{game}: {score}", font=("Arial", 14)).pack(pady=5)
+
+        root.mainloop()
+
+    def show_top_scores(self):
+        # Display the top 5 scores for each game in a new window.
+        top_scores = load_top()  
+
+        # Create a new window
+        top_scores_window = tk.Toplevel(self.root)
+        top_scores_window.title("Top 5 Scores")
+        top_scores_window.geometry("1200x900")
+
+        tk.Label(top_scores_window, text="Top 5 Scores", font=("Arial", 20, "bold")).pack(pady=20)
+
+        # Display the top scores for each game
+        for game, scores in top_scores.items():
+            tk.Label(top_scores_window, text=f"{game}", font=("Arial", 16, "bold")).pack(pady=10)
+            for username, score in scores:
+                tk.Label(top_scores_window, text=f"{username}: {score}", font=("Arial", 14)).pack()
+
+        tk.Button(top_scores_window, text="Close", font=("Arial", 14), command=top_scores_window.destroy).pack(pady=20)
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    menu = Menu(root)
+    root.mainloop()

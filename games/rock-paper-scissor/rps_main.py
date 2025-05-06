@@ -1,8 +1,16 @@
 #Alishya Xavier, Profiecency test: Rock, Paper, Scissors
 import random
 
-
 def main():
+    print('''
+
+ ______     ______     ______     __  __           ______   ______     ______   ______     ______           ______     ______     __     ______     ______     ______     ______     ______    
+/\  == \   /\  __ \   /\  ___\   /\ \/ /          /\  == \ /\  __ \   /\  == \ /\  ___\   /\  == \         /\  ___\   /\  ___\   /\ \   /\  ___\   /\  ___\   /\  __ \   /\  == \   /\  ___\   
+\ \  __<   \ \ \/\ \  \ \ \____  \ \  _"-.        \ \  _-/ \ \  __ \  \ \  _-/ \ \  __\   \ \  __<         \ \___  \  \ \ \____  \ \ \  \ \___  \  \ \___  \  \ \ \/\ \  \ \  __<   \ \___  \  
+ \ \_\ \_\  \ \_____\  \ \_____\  \ \_\ \_\        \ \_\    \ \_\ \_\  \ \_\    \ \_____\  \ \_\ \_\        \/\_____\  \ \_____\  \ \_\  \/\_____\  \/\_____\  \ \_____\  \ \_\ \_\  \/\_____\ 
+  \/_/ /_/   \/_____/   \/_____/   \/_/\/_/         \/_/     \/_/\/_/   \/_/     \/_____/   \/_/ /_/         \/_____/   \/_____/   \/_/   \/_____/   \/_____/   \/_____/   \/_/ /_/   \/_____/ 
+                                                                                                                                                                                               
+''')
     score = 0
     comp_score = 0
     while True:
@@ -37,13 +45,14 @@ def main():
         else:
             print('That is not one of the options')
         
-        choice = input('Would you like to exit the game? y/n\n')
-        if choice == 'y':
+        choice = input('What would you like to do:\n1. Play again\n2. Exit\nChoice: ')
+        if choice == '1':
+            continue
+        elif choice == '2':
             print('Your final score is:',score)
             print('The computers final score is:', comp_score)
-            break
+            return score
         else:
+            print('That is not an option')
             continue
 
-if __name__ == "__main__":
-    main()
