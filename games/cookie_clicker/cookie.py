@@ -57,11 +57,11 @@ class CookieClicker:
         self.cookie_label.pack(pady=10)
 
         # Cookie button
-        image = Image.open(COOKIE_IMAGE_PATH)
-        self.cookie_photo = ImageTk.PhotoImage(image)
-        self.cookie_button = tk.Button(self.root, image=self.cookie_photo, command=self.click_cookie)
+        # image = Image.open(COOKIE_IMAGE_PATH)
+        # self.cookie_photo = ImageTk.PhotoImage(image)
+        # self.cookie_button = tk.Button(self.root, image=self.cookie_photo, command=self.click_cookie)
         # self.cookie_button.image = self.cookie_photo  # Prevent garbage collection
-        self.cookie_button.pack(side="top", pady=10)
+        # self.cookie_button.pack(side="top", pady=10)
 
         # Buildings frame
         self.buildings_frame = tk.Frame(self.root)

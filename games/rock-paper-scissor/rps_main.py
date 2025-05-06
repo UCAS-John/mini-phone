@@ -1,7 +1,13 @@
 #Alishya Xavier, Profiecency test: Rock, Paper, Scissors
 import random
+import sys
+import os
 
-def main():
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "src")))
+from main import app
+from manage.scores import save_score
+
+def rps():
     print('''
 
  ______     ______     ______     __  __           ______   ______     ______   ______     ______           ______     ______     __     ______     ______     ______     ______     ______    
@@ -51,8 +57,11 @@ def main():
         elif choice == '2':
             print('Your final score is:',score)
             print('The computers final score is:', comp_score)
+            save_score(app.current_user, 'rock paper scissors', score)
             return score
         else:
             print('That is not an option')
             continue
 
+if __name__ == "__main__":
+    rps()

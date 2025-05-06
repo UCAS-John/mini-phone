@@ -13,13 +13,13 @@ from manage.scores import load_all, load_top
 IMAGE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "images")
 GAMES_SCRIPTS = {
     # "Battle Simulator": os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', "games", "battle_simulator", "main.py"), # Remove this game
-    "Cookie Clicker": os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', "games", "cookie_clicker", "cookie_main.py"),
-    "Hangman": os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', "games", "Hangman", "hangman_main.py"),
-    "Number Guessing": os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', "games", "number_guessing", "number_guessing_main.py"),
-    "Rock Paper Scissors": os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', "games", "rock_paper_scissors", "rps_main.py"),
-    "Simon": os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', "games", "simon", "simon_main.py"),
-    "Simple Quiz": os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', "games", "Simple_quiz", "quiz_main.py"),
-    "Tic Tac Toe": os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', "games", "Tic_Tac_Toe", "tic_tac_toe_main.py")
+    "Cookie Clicker": os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', "games", "cookie_clicker", "cookie_main.py")),
+    "Hangman": os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', "games", "Hangman", "hangman_main.py")),
+    "Number Guessing": os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', "games", "number_guessing", "number_guessing_main.py")),
+    "Rock Paper Scissors": os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', "games", "rock-paper-scissor", "rps_main.py")),
+    "Simon": os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', "games", "simon", "simon_main.py")),
+    "Simple Quiz": os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', "games", "Simple_quiz", "quiz_main.py")),
+    "Tic Tac Toe": os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', "games", "Tic_Tac_Toe", "tic_tac_toe_main.py"))
 }
 
 class Menu:
@@ -77,6 +77,7 @@ class Menu:
                 text=game_name,
                 image=button_image,
                 compound="top",
+                bg="blue",
                 font=("Arial", 12),
                 command=lambda path=script_path: self.run_game(path)
             )
@@ -199,6 +200,7 @@ class Menu:
 
     def run_game(self, script_path):
         """Run the selected game."""
+        print(script_path)
         if os.path.exists(script_path):
             subprocess.run(["python", script_path])
         else:
