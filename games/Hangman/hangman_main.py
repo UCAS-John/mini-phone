@@ -1,7 +1,6 @@
 
 from faker import Faker
 
-# Generate a random word using Faker
 fake = Faker()
 rand_word = fake.word().lower()
 
@@ -52,5 +51,5 @@ def guesser(letters, wordy, score):
             print(ch, end='')
         print()
 
-# Start the game
+
 word(rand_word)
