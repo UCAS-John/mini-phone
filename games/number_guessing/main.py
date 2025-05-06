@@ -20,8 +20,8 @@ def main(score):
 
         num_guess=int(input("what is your guess for the number?? "))
 
-#        if num_guess != int:
-#            print("bud, choose a number it ain't that hard. 😊")
+        if num_guess != int:
+            print("bud, choose a number it ain't that hard. 😊")
         
 
         if num_guess == rand_num:
