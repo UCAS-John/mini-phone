@@ -1,5 +1,5 @@
 import tkinter as tk
-from simon import SimonGame
+from games.simon.simon import SimonGame
 
 def main():
     root = tk.Tk()

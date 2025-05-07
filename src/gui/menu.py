@@ -2,25 +2,32 @@ import tkinter as tk
 from tkinter import messagebox
 import os
 from PIL import Image, ImageTk
-import subprocess
 import sys
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from profiles.profile import create_profile, delete_profile, login_profile
-from manage.scores import load_all, load_top
-from games import cookie_clicker, hangman, number_guessing, rock_paper_scissors, simon, simple_quiz, tic_tac_toe
+from manage.scores import load_all, load_top, save_score
+
+from games.cookie_clicker.cookie_main import cookie as cookie_main
+# from games.battle_simulator.battle_main import main as battle_main
+# from games.hangman.hangman_main import main as hangman_main
+from games.number_guessing.number_guessing_main import main as number_guessing_main
+from games.rock_paper_scissor.rps_main import main as rps_main
+from games.simon.simon_main import main as simon_main
+from games.simple_quiz.quiz_main import main as quiz_main
+from games.tic_tac_toe.tic_tac_toe_main import play_game as tic_tac_toe_main
 
 # Paths for images and game scripts
 IMAGE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "images")
 GAMES_SCRIPTS = {
     # "Battle Simulator": os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', "games", "battle_simulator", "main.py"), # Remove this game
-    "Cookie Clicker": os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', "games", "cookie_clicker", "cookie_main.py")),
+    "Cookie Clicker": cookie_main,
     "Hangman": os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', "games", "Hangman", "hangman_main.py")),
-    "Number Guessing": os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', "games", "number_guessing", "number_guessing_main.py")),
-    "Rock Paper Scissors": os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', "games", "rock-paper-scissor", "rps_main.py")),
-    "Simon": os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', "games", "simon", "simon_main.py")),
-    "Simple Quiz": os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', "games", "Simple_quiz", "quiz_main.py")),
-    "Tic Tac Toe": os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', "games", "Tic_Tac_Toe", "tic_tac_toe_main.py"))
+    "Number Guessing": number_guessing_main,
+    "Rock Paper Scissors": rps_main,
+    "Simon": simon_main,
+    "Simple Quiz": quiz_main,
+    "Tic Tac Toe": tic_tac_toe_main
 }
 
 class Menu:
@@ -80,7 +87,7 @@ class Menu:
                 compound="top",
                 bg="blue",
                 font=("Arial", 12),
-                command=lambda path=script_path: self.run_game(path)
+                command=lambda path=script_path: self.run_game(path,game_name=game_name.lower())
             )
             button.image = button_image  # Keep a reference to avoid garbage collection
             button.grid(row=row, column=col, padx=10, pady=10)
@@ -199,13 +206,13 @@ class Menu:
             except ValueError as e:
                 messagebox.showerror("Error", str(e))
 
-    def run_game(self, script_path):
+    def run_game(self, game_func, game_name=None):
         """Run the selected game."""
-        print(script_path)
-        if os.path.exists(script_path):
-            subprocess.run(["python", script_path])
-        else:
-            messagebox.showerror("Error", f"Game script not found: {script_path}")
+        print(game_func)
+        if callable(game_func):
+            score = game_func()
+            save_score(self.current_user, game_name, score)
+            return
     
     def show_score(self):
         root = tk.Tk()
