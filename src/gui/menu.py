@@ -2,24 +2,32 @@ import tkinter as tk
 from tkinter import messagebox
 import os
 from PIL import Image, ImageTk
-import subprocess
 import sys
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from profiles.profile import create_profile, delete_profile, login_profile
-from manage.scores import load_all, load_top
+from manage.scores import load_all, load_top, save_score
+
+from games.cookie_clicker.cookie_main import cookie as cookie_main
+# from games.battle_simulator.battle_main import main as battle_main
+# from games.hangman.hangman_main import main as hangman_main
+from games.number_guessing.number_guessing_main import main as number_guessing_main
+from games.rock_paper_scissor.rps_main import main as rps_main
+from games.simon.simon_main import main as simon_main
+from games.simple_quiz.quiz_main import main as quiz_main
+from games.tic_tac_toe.tic_tac_toe_main import play_game as tic_tac_toe_main
 
 # Paths for images and game scripts
 IMAGE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "images")
 GAMES_SCRIPTS = {
     # "Battle Simulator": os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', "games", "battle_simulator", "main.py"), # Remove this game
-    "Cookie Clicker": os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', "games", "cookie_clicker", "cookie_main.py"),
-    "Hangman": os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', "games", "Hangman", "hangman_main.py"),
-    "Number Guessing": os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', "games", "number_guessing", "number_guessing_main.py"),
-    "Rock Paper Scissors": os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', "games", "rock_paper_scissors", "rps_main.py"),
-    "Simon": os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', "games", "simon", "simon_main.py"),
-    "Simple Quiz": os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', "games", "Simple_quiz", "quiz_main.py"),
-    "Tic Tac Toe": os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', "games", "Tic_Tac_Toe", "tic_tac_toe_main.py")
+    "Cookie Clicker": cookie_main,
+    "Hangman": os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', "games", "Hangman", "hangman_main.py")),
+    "Number Guessing": number_guessing_main,
+    "Rock Paper Scissors": rps_main,
+    "Simon": simon_main,
+    "Simple Quiz": quiz_main,
+    "Tic Tac Toe": tic_tac_toe_main
 }
 
 class Menu:
@@ -77,8 +85,9 @@ class Menu:
                 text=game_name,
                 image=button_image,
                 compound="top",
+                bg="light blue",                
                 font=("Arial", 12),
-                command=lambda path=script_path: self.run_game(path)
+                command=lambda path=script_path: self.run_game(path,game_name=game_name.lower())
             )
             button.image = button_image  # Keep a reference to avoid garbage collection
             button.grid(row=row, column=col, padx=10, pady=10)
@@ -112,7 +121,7 @@ class Menu:
         score_button_frame.pack(pady=20)
 
         # "Show Score" button
-        tk.Button(score_button_frame, text="Show Score", font=("Arial", 14), command=self.show_score).pack()
+        tk.Button(score_button_frame, text="Show Personal Score", font=("Arial", 14), command=self.show_score).pack()
 
         # Create a frame for bottom buttons (aligned horizontally)
         bottom_buttons_frame = tk.Frame(self.root)
@@ -197,12 +206,13 @@ class Menu:
             except ValueError as e:
                 messagebox.showerror("Error", str(e))
 
-    def run_game(self, script_path):
+    def run_game(self, game_func, game_name=None):
         """Run the selected game."""
-        if os.path.exists(script_path):
-            subprocess.run(["python", script_path])
-        else:
-            messagebox.showerror("Error", f"Game script not found: {script_path}")
+        print(game_func)
+        if callable(game_func):
+            score = game_func()
+            save_score(self.current_user, game_name, score)
+            return
     
     def show_score(self):
         root = tk.Tk()
