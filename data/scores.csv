@@ -1,7 +1,8 @@
-username,hangman,number guessing,rock paper scissors,simon,simple quiz,tic tac toe
-test_user,100,0,0,0,0,0
-<<<<<<< HEAD
-Gavin,0,0,0,0,0,0
-=======
-1,54,4,4,0,0,0
->>>>>>> 9c14335b60e29af005f7f2194092965bed261270
+username,hangman,number guessing,rock paper scissors,simon,simple quiz,tic tac toe,tic tace toe
+test_user,100.0,0.0,0.0,0.0,0.0,0.0,
+<<<<<<< HEAD,,,,,,,
+Gavin,0.0,0.0,0.0,0.0,0.0,0.0,
+=======,,,,,,,
+1,54.0,4.0,4.0,0.0,0.0,0.0,
+>>>>>>> 9c14335b60e29af005f7f2194092965bed261270,,,,,,,
+G,0.0,0.0,0.0,0.0,0.0,,0.0
