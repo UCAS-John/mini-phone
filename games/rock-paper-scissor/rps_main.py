@@ -56,3 +56,5 @@ def main():
             print('That is not an option')
             continue
 
+if __name__ == "__main__":
+    main()
