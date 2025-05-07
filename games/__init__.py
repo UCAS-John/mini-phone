@@ -1,7 +1,5 @@
 import random
 
-#Working on it
-import random
 
 def print_board(board):
 #This is the function that prints the tic tac toe board
@@ -32,56 +30,40 @@ def computer(board):
   return random.choice(empty_spaces)
 
 def play_game():
-  score = 0
   print('This is a Tic-Tac-Toe game and all of the instructions\nare just like a normal game of Tic-Tac-Toe but instead\nof writing the X, you just type in a number (0-8) to\nplace the X left to right and it goes like that \nfor each of the rows.')
 #This function actually asks the questions and puts the spots into the board
+  board = [" " for _ in range(9)]
+  current_player = "X"
+
   while True:
-      
-    board = [" " for _ in range(9)]
-    current_player = "X"
+      print_board(board)
+      print(f"Player {current_player}'s turn.")
 
-    while True:
-        print_board(board)
-        print(f"Player {current_player}'s turn.")
+      if current_player == "X":
+          while True:
+              move = int(input("Enter your move (0-8): "))
+              if 0 <= move <= 8 and board[move] == " ":
+                  board[move] = current_player
+                  break
+              else:
+                  print("Invalid move. Try again.")
+      else:
+          move = computer(board)
+          board[move] = current_player
+          print(f"Computer's move: {move + 1}")
 
-        if current_player == "X":
-            while True:
-                move = int(input("Enter your move (0-8): "))
-                if 0 <= move <= 8 and board[move] == " ":
-                    board[move] = current_player
-                    break
-                else:
-                    print("Invalid move. Try again.")
-        else:
-            move = computer(board)
-            board[move] = current_player
-            print(f"Computer's move: {move + 1}")
+      if check_win(board, current_player):
+          print_board(board)
+          print(f"Player {current_player} wins!")
+          break
 
-        if check_win(board, current_player):
-            print_board(board)
-            print(f"Player {current_player} wins!")
-            if current_player == 'X':
-               score+=1
-            else:
-               #working on it
-              break
+      if " " not in board:
+          print_board(board)
+          print("It's a tie!")
+          break
 
-        if " " not in board:
-            print_board(board)
-            print("It's a tie!")
-            break
-
-        current_player = "O" if current_player == "X" else "X"
-
-        #question = input('Do you want to keep playing ')
+      current_player = "O" if current_player == "X" else "X"
 
 #Lastly this uses a specific name the computer knows to start the program at the play_game function
-<<<<<<< HEAD:games/Tic-Tac-Toe/main.py
 if __name__ == "__main__":
    play_game()
-
-=======
-
-if __name__ == "__main__":
-    play_game()
->>>>>>> 9c14335b60e29af005f7f2194092965bed261270:games/Tic-Tac-Toe/tic_tac_toe_main.py
