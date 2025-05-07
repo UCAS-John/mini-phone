@@ -8,6 +8,7 @@ import sys
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from profiles.profile import create_profile, delete_profile, login_profile
 from manage.scores import load_all, load_top
+from games import cookie_clicker, hangman, number_guessing, rock_paper_scissors, simon, simple_quiz, tic_tac_toe
 
 # Paths for images and game scripts
 IMAGE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "images")
