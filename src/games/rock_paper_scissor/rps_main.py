@@ -1,5 +1,9 @@
 #Alishya Xavier, Profiecency test: Rock, Paper, Scissors
 import random
+import sys
+import os
+
+from manage.scores import save_score
 
 def main():
     print('''
