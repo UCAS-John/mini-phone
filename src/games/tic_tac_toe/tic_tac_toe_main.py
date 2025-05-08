@@ -64,7 +64,7 @@ def play_game():
                score+=1
             else:
                #working on it
-            break
+              break
 
         if " " not in board:
             print_board(board)
