@@ -31,7 +31,18 @@ def computer(board):
   empty_spaces = [i for i in range(9) if board[i] == " "]
   return random.choice(empty_spaces)
 
+<<<<<<< HEAD
 def play_game(score):
+=======
+def play_game():
+  score = 0
+  print('''
+___    __           ___       __           ___  __   ___ 
+ |  | /  `    __     |   /\  /  `    __     |  /  \ |__  
+ |  | \__,           |  /--\ \__,           |  \__/ |___ 
+
+        ''')
+>>>>>>> 42ebbf421ef1b32b4bc906b09c8ebe5fdd3a00b2
   print('This is a Tic-Tac-Toe game and all of the instructions\nare just like a normal game of Tic-Tac-Toe but instead\nof writing the X, you just type in a number (0-8) to\nplace the X left to right and it goes like that \nfor each of the rows.')
 #This function actually asks the questions and puts the spots into the board
   while True:
@@ -100,6 +111,10 @@ def main():
 
 #Lastly this uses a specific name the computer knows to start the program at the play_game function
 if __name__ == "__main__":
+<<<<<<< HEAD
   main()
 
 
+=======
+   play_game()
+>>>>>>> 42ebbf421ef1b32b4bc906b09c8ebe5fdd3a00b2

@@ -1,4 +1,3 @@
-
 from faker import Faker
 
 fake = Faker()
@@ -7,7 +6,8 @@ def word(score):
     rand_word = fake.word().lower()
     wordy = list(rand_word)
     letters = ['_|' for _ in wordy]
-    guesser(letters, wordy, score)
+    score = guesser(letters, wordy, score)
+    return score
 
 def guesser(letters, wordy, score):
     guessed_letters = set()
@@ -50,11 +50,11 @@ def guesser(letters, wordy, score):
         elif play == 'no' or play == 'n':
             print("Thanks for playing! ")
             #Call the save score function and save the score
-            return
+            return 
         else:
             print("PICK A VALID INPUT. Exiting game...")
             #Call the save score function and save the score
-            return
+            return 
             
 
 
@@ -77,10 +77,13 @@ def main():
         options = input("what would you like to do?\n1) play\n2) exit\n")
         if options == '1':
             score = 0
-            word(score)
+            score = word(score)
         elif options == '2':
             break
         else:
             print("Pick a valid choice.")
+        
+    return score
 
-main()
+if __name__ == "__main__":
+    main()
