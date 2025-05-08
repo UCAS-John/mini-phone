@@ -45,16 +45,16 @@ def play_game(score):
 
         if current_player == "X":
             while True:
-                move = int(input("Enter your move (0-8): "))
-                if 0 <= move <= 8 and board[move] == " ":
-                    board[move] = current_player
+                move = int(input("Enter your move (1-9): "))
+                if 1 <= move <= 9 and board[move-1] == " ":
+                    board[move-1] = current_player
                     break
                 else:
                     print("Invalid move. Try again.")
         else:
             move = computer(board)
             board[move] = current_player
-            print(f"Computer's move: {move + 1}")
+            print(f"Computer's turn")
 
         if check_win(board, current_player):
             print_board(board)
@@ -65,7 +65,7 @@ def play_game(score):
                #working on it
               break
 
-        if " " not in board:
+        if " " not in board and check_win(board, current_player) == False:
             print_board(board)
             print("It's a tie!")
             break
