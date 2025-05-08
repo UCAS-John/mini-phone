@@ -87,7 +87,7 @@ class Menu:
                 compound="top",
                 bg="light blue",                
                 font=("Arial", 12),
-                command=lambda path=script_path: self.run_game(path,game_name=game_name.lower())
+                command=lambda path=script_path: self.run_game(game_func=path,game_name=game_name.lower())
             )
             button.image = button_image  # Keep a reference to avoid garbage collection
             button.grid(row=row, column=col, padx=10, pady=10)
@@ -173,10 +173,12 @@ class Menu:
         try:
             message = login_profile(username, password)
             self.current_user = username
-            # messagebox.showinfo("Login Successful", message) # Test
+            messagebox.showinfo("Login Successful", message) # Test
             self.main_menu()
         except ValueError as e:
             messagebox.showerror("Login Failed", str(e))
+        except Exception as e:
+            messagebox.showerror("Error", f"An unexpected error occurred: {str(e)}")
 
     def logout(self):
         """Handle user logout."""
@@ -192,9 +194,12 @@ class Menu:
             messagebox.showerror("Error", "Username and password cannot be empty!")
             return
 
-        message = create_profile(username, password)
-        messagebox.showinfo("Profile Created", message)
-        self.login_screen()
+        try:
+            message = create_profile(username, password)
+            messagebox.showinfo("Profile Created", message)
+            self.login_screen()
+        except ValueError as e:
+            messagebox.showerror("Error", str(e))
 
     def delete_profile(self):
         """Handle profile deletion."""
@@ -208,10 +213,10 @@ class Menu:
 
     def run_game(self, game_func, game_name=None):
         """Run the selected game."""
-        print(game_func)
+        print(game_func.__name__)
         if callable(game_func):
             score = game_func()
-            save_score(self.current_user, game_name, score)
+            save_score(username=self.current_user, game=game_name.lower(), score=score)
             return
     
     def show_score(self):
@@ -220,7 +225,7 @@ class Menu:
         root.geometry("600x400")
         scores = load_all(self.current_user)
 
-        print(scores)
+        # print(scores)
 
         for game, score in scores.items():
             if game == "username":

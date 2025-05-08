@@ -3,7 +3,7 @@ import tkinter as tk
 import os
 import sys
 
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "src")))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "src")))
 from manage import scores
 
 class SimonGame:
@@ -32,27 +32,27 @@ class SimonGame:
             self.buttons.append(row)
 
     def start_game(self):
-        """Start the game by resetting the sequence and adding the first pattern."""
+        # Start the game by resetting the sequence and adding the first pattern.
         self.sequence = []
         self.player_sequence = []
         self.info_label.config(text="Watch the pattern!")
         self.add_to_sequence()
 
     def add_to_sequence(self):
-        """Add a random button to the sequence and play it."""
+        # Add a random button to the sequence and play it.
         row = random.randint(0, 2)
         col = random.randint(0, 2)
         self.sequence.append(self.buttons[row][col])
         self.play_sequence()
 
     def play_sequence(self):
-        """Play the current sequence by flashing the buttons."""
+        # Play the current sequence by flashing the buttons.
         self.disable_buttons()
         self.info_label.config(text="Watch the pattern!")
         self.root.after(500, self._play_sequence_step, 0)
 
     def _play_sequence_step(self, index):
-        """Play each step of the sequence with a delay."""
+        # Play each step of the sequence with a delay.
         if index < len(self.sequence):
             button = self.sequence[index]
             self.flash_button(button)
@@ -62,14 +62,14 @@ class SimonGame:
             self.info_label.config(text="Your turn!")
 
     def flash_button(self, button):
-        """Flash a button by changing its color temporarily."""
+        # Flash a button by changing its color temporarily.
         original_color = button.cget("bg")
         button.config(bg="yellow")
         self.root.update()
         self.root.after(500, lambda: button.config(bg=original_color))
 
     def player_input(self, button):
-        """Handle the player's input."""
+        # Handle the player's input.
         self.player_sequence.append(button)
         self.flash_button(button)
         if self.player_sequence == self.sequence[:len(self.player_sequence)]:
@@ -81,16 +81,16 @@ class SimonGame:
         else:
             self.info_label.config(text="Wrong! Game Over!")
             self.disable_buttons()
-            scores.save_csv("data/scores.csv", {"username": "player", "simon": self.score})
+            return self.score
 
     def enable_buttons(self):
-        """Enable all buttons for player input."""
+        # Enable all buttons for player input.
         for row in self.buttons:
             for button in row:
                 button.config(state="normal")
 
     def disable_buttons(self):
-        """Disable all buttons to prevent input."""
+        # Disable all buttons to prevent input.
         for row in self.buttons:
             for button in row:
                 button.config(state="disabled")
