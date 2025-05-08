@@ -31,8 +31,7 @@ def computer(board):
   empty_spaces = [i for i in range(9) if board[i] == " "]
   return random.choice(empty_spaces)
 
-def play_game():
-  score = 0
+def play_game(score):
   print('This is a Tic-Tac-Toe game and all of the instructions\nare just like a normal game of Tic-Tac-Toe but instead\nof writing the X, you just type in a number (0-8) to\nplace the X left to right and it goes like that \nfor each of the rows.')
 #This function actually asks the questions and puts the spots into the board
   while True:
@@ -73,15 +72,34 @@ def play_game():
 
         current_player = "O" if current_player == "X" else "X"
 
-        #question = input('Do you want to keep playing ')
+    playAgain = input("Would you like to play again? (type y or n): ")
+    if playAgain == 'y':
+      play_game(score)
+    elif playAgain == 'n':
+      break
+    else:
+      print("Invalid choice, leaving game.")
+      break
+
+    break
+  return score
+        
+
+
+def main():
+  while True:
+    ask = input("What would you like to do?\n1) play tic tac toe\n2) EXIT\n")
+    if ask == '1':
+      score = 0
+      play_game(score)
+    elif ask == '2':
+      break
+    else:
+      print("invalid choice. Try again")
+      
 
 #Lastly this uses a specific name the computer knows to start the program at the play_game function
-<<<<<<< HEAD:games/Tic-Tac-Toe/main.py
 if __name__ == "__main__":
-   play_game()
+  main()
 
-=======
 
-if __name__ == "__main__":
-    play_game()
->>>>>>> 9c14335b60e29af005f7f2194092965bed261270:games/Tic-Tac-Toe/tic_tac_toe_main.py
