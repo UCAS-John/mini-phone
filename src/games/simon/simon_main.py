@@ -14,6 +14,7 @@ def main():
     root = tk.Tk()
     game = SimonGame(root)
     root.mainloop()
+    return game.score
 
 if __name__ == "__main__":
     main()

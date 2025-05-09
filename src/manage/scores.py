@@ -3,19 +3,25 @@ from manage.file import read_csv, save_csv
 from typing import Literal
 import pandas as pd
 
-_TYPES = Literal["hangman", "number guessing", "rock paper scissors", "simon", "simple quiz", "tic tace toe"]
+_TYPES = Literal["hangman", "number guessing", "rock paper scissors", "simon", "simple quiz", "tic tac toe"]
 
 PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "data", "scores.csv"))
 
 def save_score(username: str, game: _TYPES, score: int):
     data = read_csv(PATH)
     if data is None:
-        data = pd.DataFrame(columns=["username", "hangman", "number guessing", "rock paper scissors", "simon", "simple quiz", "tic tac toe", "simon"])
+        data = pd.DataFrame(columns=["username", "hangman", "number guessing", "rock paper scissors", "simon", "simple quiz", "tic tac toe"])
     if game not in data.columns:
         raise ValueError(f"Game '{game}' is not a valid game type.")
 
-    data.loc[data["username"] == username, game] = score
+    if not data.loc[data["username"] == username, game].empty:
+        current_score = data.loc[data["username"] == username, game].iloc[0]  # Get the first matching value
+        if current_score > score:
+            return
+        else:
+            data.loc[data["username"] == username, game] = score
 
+    # print(PATH)
     save_csv(PATH, data)
 
 def load_score(username, game: _TYPES):
@@ -23,7 +29,7 @@ def load_score(username, game: _TYPES):
     if data is None:
         return None
     if game not in data.columns:
-        data = pd.DataFrame(columns=["username", "hangman", "number guessing", "rock paper scissors", "simon", "simple quiz", "tic tac toe", "simon"])
+        data = pd.DataFrame(columns=["username", "hangman", "number guessing", "rock paper scissors", "simon", "simple quiz", "tic tac toe"])
 
     data = data[data["username"] == username]
 
@@ -52,9 +58,11 @@ def load_top(n=5):
             top_scores[game] = list(zip(sorted_data.head(n)["username"], sorted_data.head(n)[game]))
     return pd.DataFrame.from_dict(top_scores, orient='index').transpose()
 
-if __name__ == "__main__":
+# if __name__ == "__main__":
     
-    data = read_csv(PATH)
-    print(data.to_string())
-    data = load_top()
-    print(data.to_string())
+    # data = read_csv(PATH)
+    # print(data.to_string())
+    # data = load_top()
+    # print(data.to_string())
+
+    # save_score("1", "rock paper scissors", 21)

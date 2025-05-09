@@ -34,7 +34,11 @@ def play_game():
   computer_score = 0
   playing = True
 
-  print('This is a Tic-Tac-Toe game and all of the instructions\nare just like a normal game of Tic-Tac-Toe but instead\nof writing the X, you just type in a number (0-8) to\nplace the X left to right and it goes like that \nfor each of the rows.')
+  print('This is a Tic-Tac-Toe game and all of the instructions\n'
+          'are just like a normal game of Tic-Tac-Toe but instead\n'
+          'of writing the X, you just type in a number (0-8) to\n'
+          'place the X left to right and it goes like that \n'
+          'for each of the rows.')
   #This function actually asks the questions and puts the spots into the board
 
   while playing:
