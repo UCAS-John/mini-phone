@@ -82,11 +82,6 @@ ___    __           ___       __           ___  __   ___
         #question = input('Do you want to keep playing ')
 
 #Lastly this uses a specific name the computer knows to start the program at the play_game function
-<<<<<<< HEAD
 
 if __name__ == "__main__":
     play_game()
-=======
-if __name__ == "__main__":
-   play_game()
->>>>>>> 42ebbf421ef1b32b4bc906b09c8ebe5fdd3a00b2
