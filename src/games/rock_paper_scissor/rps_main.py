@@ -1,11 +1,7 @@
 #Alishya Xavier, Profiecency test: Rock, Paper, Scissors
 import random
-import sys
-import os
 
-from manage.scores import save_score
-
-def main():
+def rps_main():
     print('''
 
  ______     ______     ______     __  __           ______   ______     ______   ______     ______           ______     ______     __     ______     ______     ______     ______     ______    
@@ -61,4 +57,5 @@ def main():
             continue
 
 if __name__ == "__main__":
-    main()
+    score = rps_main()
+    print(score)

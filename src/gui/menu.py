@@ -12,7 +12,7 @@ from games.cookie_clicker.cookie_main import cookie as cookie_main
 # from games.battle_simulator.battle_main import main as battle_main
 # from games.hangman.hangman_main import main as hangman_main
 from games.number_guessing.number_guessing_main import main as number_guessing_main
-from games.rock_paper_scissor.rps_main import main as rps_main
+from games.rock_paper_scissor.rps_main import rps_main 
 from games.simon.simon_main import main as simon_main
 from games.simple_quiz.quiz_main import main as quiz_main
 from games.tic_tac_toe.tic_tac_toe_main import play_game as tic_tac_toe_main
@@ -22,7 +22,7 @@ IMAGE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "imag
 GAMES_SCRIPTS = {
     # "Battle Simulator": os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', "games", "battle_simulator", "main.py"), # Remove this game
     "cookie clicker": cookie_main,
-    "hangman": os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', "games", "Hangman", "hangman_main.py")),
+    # "hangman": os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', "games", "Hangman", "hangman_main.py")),
     "number guessing": number_guessing_main,
     "rock paper scissors": rps_main,
     "simon": simon_main,
@@ -58,7 +58,7 @@ class Menu:
         tk.Button(self.root, text="Create Profile", font=("Arial", 14), command=self.create_profile_screen).pack(pady=10)
 
     def main_menu(self):
-        """Create the main menu after login."""
+        # Create the main menu after login.
         self.clear_screen()
 
         tk.Label(self.root, text=f"Welcome, {self.current_user}!", font=("Arial", 20, "bold")).pack(pady=20)
@@ -71,25 +71,25 @@ class Menu:
 
         # Create game buttons with a row limit of 5
         row, col = 0, 0
-        for game_name, script_path in GAMES_SCRIPTS.items():
+        for game_name, game_func in GAMES_SCRIPTS.items():
             # Load button image
-            image_path = os.path.join(IMAGE_DIR, f"{game_name.replace(' ', '_').lower()}.png")
-            if os.path.exists(image_path):
-                button_image = ImageTk.PhotoImage(Image.open(image_path).resize((50, 50)))
-            else:
-                button_image = None
+            # image_path = os.path.join(IMAGE_DIR, f"{game_name.replace(' ', '_').lower()}.png")
+            # if os.path.exists(image_path):
+            #     button_image = ImageTk.PhotoImage(Image.open(image_path).resize((50, 50)))
+            # else:
+            #     button_image = None
 
             # Create button
             button = tk.Button(
                 game_frame,
                 text=game_name,
-                image=button_image,
+                # image=button_image,
                 compound="top",
                 bg="light blue",                
                 font=("Arial", 12),
-                command=lambda path=script_path: self.run_game(game_func=path,game_name=game_name.lower())
+                command=lambda func=game_func: self.run_game(game_func=func, game_name=game_name)
             )
-            button.image = button_image  # Keep a reference to avoid garbage collection
+            # button.image = button_image  # Keep a reference to avoid garbage collection
             button.grid(row=row, column=col, padx=10, pady=10)
 
             # Add top score label below the button
@@ -211,8 +211,8 @@ class Menu:
             except ValueError as e:
                 messagebox.showerror("Error", str(e))
 
-    def run_game(self, game_func: function, game_name=None):
-        """Run the selected game."""
+    def run_game(self, game_func, game_name=None):
+        # Run the selected game.
         print(game_func.__name__)
         if callable(game_func):
             score = game_func()
