@@ -21,13 +21,13 @@ from games.tic_tac_toe.tic_tac_toe_main import play_game as tic_tac_toe_main
 IMAGE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "images")
 GAMES_SCRIPTS = {
     # "Battle Simulator": os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', "games", "battle_simulator", "main.py"), # Remove this game
-    "Cookie Clicker": cookie_main,
-    "Hangman": os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', "games", "Hangman", "hangman_main.py")),
-    "Number Guessing": number_guessing_main,
-    "Rock Paper Scissors": rps_main,
-    "Simon": simon_main,
-    "Simple Quiz": quiz_main,
-    "Tic Tac Toe": tic_tac_toe_main
+    "cookie clicker": cookie_main,
+    "hangman": os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', "games", "Hangman", "hangman_main.py")),
+    "number guessing": number_guessing_main,
+    "rock paper scissors": rps_main,
+    "simon": simon_main,
+    "simple quiz": quiz_main,
+    "tic tac toe": tic_tac_toe_main
 }
 
 class Menu:
@@ -211,12 +211,12 @@ class Menu:
             except ValueError as e:
                 messagebox.showerror("Error", str(e))
 
-    def run_game(self, game_func, game_name=None):
+    def run_game(self, game_func: function, game_name=None):
         """Run the selected game."""
         print(game_func.__name__)
         if callable(game_func):
             score = game_func()
-            save_score(username=self.current_user, game=game_name.lower(), score=score)
+            save_score(username=self.current_user, game=game_name, score=score)
             return
     
     def show_score(self):

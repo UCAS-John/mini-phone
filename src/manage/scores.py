@@ -55,7 +55,9 @@ def load_top(n=5):
 
 if __name__ == "__main__":
     
-    data = read_csv(PATH)
-    print(data.to_string())
-    data = load_top()
-    print(data.to_string())
+    # data = read_csv(PATH)
+    # print(data.to_string())
+    # data = load_top()
+    # print(data.to_string())
+
+    save_score("1", "hangman", 10)
