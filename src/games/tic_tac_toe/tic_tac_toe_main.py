@@ -64,11 +64,7 @@ def play_game():
                score+=1
             else:
                #working on it
-<<<<<<< HEAD:games/Tic-Tac-Toe/tic_tac_toe_main.py
-                break
-=======
-              break
->>>>>>> 60e8776510dfbdda27a550290a257eab9ba7b1e4:src/games/tic_tac_toe/tic_tac_toe_main.py
+               break
 
         if " " not in board:
             print_board(board)
@@ -80,7 +76,6 @@ def play_game():
         #question = input('Do you want to keep playing ')
 
 #Lastly this uses a specific name the computer knows to start the program at the play_game function
-<<<<<<< HEAD:games/Tic-Tac-Toe/tic_tac_toe_main.py
 if __name__ == "__main__":
    play_game()
 
@@ -140,14 +135,6 @@ def main():
             if check_winner(board, 'O'):
                 print("Computer won!")
                 return "Tic-Tac-Toe", "Computer"
-=======
-<<<<<<< HEAD:games/Tic-Tac-Toe/main.py
+            
 if __name__ == "__main__":
    play_game()
-
-=======
->>>>>>> 60e8776510dfbdda27a550290a257eab9ba7b1e4:src/games/tic_tac_toe/tic_tac_toe_main.py
-
-if __name__ == "__main__":
-    play_game()
->>>>>>> 9c14335b60e29af005f7f2194092965bed261270:games/Tic-Tac-Toe/tic_tac_toe_main.py
