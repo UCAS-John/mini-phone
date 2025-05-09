@@ -1,5 +1,5 @@
 import tkinter as tk
-from games.cookie_clicker.cookie import CookieClicker
+from cookie import CookieClicker
 
 def cookie():
     root = tk.Tk()

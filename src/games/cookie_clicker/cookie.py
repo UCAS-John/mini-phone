@@ -8,6 +8,8 @@ import sys
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "src")))
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
 
+from main import app
+
 # Paths for images and data
 COOKIE_IMAGE_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "images", "cookie.png")
 COOKIE_DATA_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "data", "cookies.csv")
@@ -33,6 +35,7 @@ class CookieClicker:
         self.root.title("Cookie Clicker")
         self.root.geometry("800x600")
         self.current_user = app.current_user
+        self.end_button = tk.Button(root, text="End Game", command=self.end_game)
 
         # Game state
         self.cookies = 0
@@ -48,6 +51,10 @@ class CookieClicker:
         # Start the CpS loop
         self.update_cookies_per_second()
 
+    def end_game(self):
+        # Stop the mainloop and close the window
+        self.root.destroy()
+        
     def create_ui(self):
         # Create the user interface.
 
