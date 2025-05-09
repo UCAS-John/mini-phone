@@ -87,7 +87,7 @@ class Menu:
                 compound="top",
                 bg="light blue",                
                 font=("Arial", 12),
-                command=lambda func=game_func: self.run_game(game_func=func, game_name=game_name)
+                command=lambda func=game_func, name=game_name: self.run_game(game_func=func, game_name=name)
             )
             # button.image = button_image  # Keep a reference to avoid garbage collection
             button.grid(row=row, column=col, padx=10, pady=10)
