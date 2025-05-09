@@ -2,7 +2,6 @@ from faker import Faker
 
 fake = Faker()
 
-
 def word(score):
     rand_word = fake.word().lower()
     wordy = list(rand_word)
