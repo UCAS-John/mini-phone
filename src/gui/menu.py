@@ -13,7 +13,7 @@ from games.cookie_clicker.cookie_main import cookie as cookie_main
 # from games.hangman.hangman_main import main as hangman_main
 from games.number_guessing.number_guessing_main import main as number_guessing_main
 from games.rock_paper_scissor.rps_main import rps_main 
-from games.simon.simon_main import main as simon_main
+from games.simon.simon_main import simon_main 
 from games.simple_quiz.quiz_main import main as quiz_main
 from games.tic_tac_toe.tic_tac_toe_main import play_game as tic_tac_toe_main
 
@@ -181,12 +181,12 @@ class Menu:
             messagebox.showerror("Error", f"An unexpected error occurred: {str(e)}")
 
     def logout(self):
-        """Handle user logout."""
+        # Handle user logout.
         self.current_user = None
         self.login_screen()
 
     def create_profile(self):
-        """Handle profile creation."""
+        # Handle profile creation.
         username = self.new_username_entry.get()
         password = self.new_password_entry.get()
 
@@ -215,10 +215,13 @@ class Menu:
         # Run the selected game.
         print(game_func.__name__)
         if callable(game_func):
-            score = game_func()
-            save_score(username=self.current_user, game=game_name, score=score)
+            if game_func.__name__ == "simon_main":
+                game_func(self.current_user)
+            else:
+                score = game_func()
+                save_score(username=self.current_user, game=game_name, score=score)
             return
-    
+        
     def show_score(self):
         root = tk.Tk()
         root.title(f"{self.current_user} Scoreboard")
