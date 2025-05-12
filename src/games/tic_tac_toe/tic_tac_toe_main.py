@@ -47,8 +47,6 @@ def play_game():
 
       # Show current score and board positions
       print(f"\nSCORE - You: {player_score} | Computer: {computer_score}")
-      print("\nBoard positions:")
-      print_board([str(i) for i in range(9)])
       print("\nGame starting!")
 
       # Main game loop
@@ -59,7 +57,7 @@ def play_game():
           if current_player == "X":
               while True:
                   try:
-                      move = int(input("Enter your move (0-8): "))
+                      move = int(input("Enter your move (1-9): "))-1
                       if 0 <= move <= 8 and board[move] == " ":
                           board[move] = current_player
                           break
@@ -70,7 +68,7 @@ def play_game():
           else:
               move = computer(board)
               board[move] = current_player
-              print(f"Computer's move: {move}")
+              print(f"Computer's move: {move+1}")
           
           if check_win(board,current_player):
              print_board(board)
@@ -104,12 +102,12 @@ def play_game():
   print(f"You: {player_score}")
   print(f"Computer: {computer_score}")
   if player_score > computer_score:
-      print("🏆 Congratulations! You won more games!")
+      print("congrats you won!!")
   elif computer_score > player_score:
-      print("Better luck next time! The computer won more games.")
+      print("LOSER. try better next time")
   else:
       print("It's a tie in the overall score!")
   return player_score
-#Lastly this uses a specific name the computer knows to start the program at the play_game function
+
 if __name__ == "__main__":
    play_game()
