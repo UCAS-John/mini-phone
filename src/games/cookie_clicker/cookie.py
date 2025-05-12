@@ -1,158 +1,199 @@
 import tkinter as tk
 from tkinter import messagebox
-import os
 from PIL import Image, ImageTk
 import pandas as pd
+import os
 import sys
 
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "src")))
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
 
-# Paths for images and data
-COOKIE_IMAGE_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "images", "cookie.png")
-COOKIE_DATA_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "data", "cookies.csv")
+from manage.file import read_csv, save_csv
 
-# Building data
-BUILDINGS = [
-    {"name": "Cursor", "cost": 15, "cps": 0.1},
-    {"name": "Grandma", "cost": 100, "cps": 1},
-    {"name": "Farm", "cost": 1100, "cps": 8},
-    {"name": "Factory", "cost": 12000, "cps": 47},
-    {"name": "Mine", "cost": 130000, "cps": 260},
-    {"name": "Shipment", "cost": 1400000, "cps": 1400},
-    {"name": "Alchemy Lab", "cost": 20000000, "cps": 7800},
-    {"name": "Portal", "cost": 166000000, "cps": 44000},
-    {"name": "Time Machine", "cost": 1230000000, "cps": 260000},
-    {"name": "Antimatter Condenser", "cost": 31000000000, "cps": 1600000},
-    {"name": "Prism", "cost": 750000000000, "cps": 10000000},
-]
+# Paths for cookie image and data
+# COOKIE_IMAGE_PATH = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "images", "cookie.png"))
+# print("COOKIE_IMAGE_PATH:", COOKIE_IMAGE_PATH)
+# if not os.path.exists(COOKIE_IMAGE_PATH):
+#     raise FileNotFoundError(f"Image file not found at: {COOKIE_IMAGE_PATH}")
+# Cookie image keep not working i give up :(
+
+COOKIE_DATA_PATH = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "data", "cookies.csv"))
 
 class CookieClicker:
-    def __init__(self, root):
+    def __init__(self, root, username):
         self.root = root
+        self.username = str(username)
         self.root.title("Cookie Clicker")
-        self.root.geometry("800x600")
-        self.current_user = app.current_user
-
-        # Game state
         self.cookies = 0
-        self.cps = 0
-        self.buildings = {building["name"]: {"count": 0, "cost": building["cost"], "cps": building["cps"]} for building in BUILDINGS}
+        self.cps = 0  # Cookies per second
+        self.buildings = {
+            "Cursor": {"cost": 10, "cps": 1, "count": 0},
+            "Grandma": {"cost": 100, "cps": 5, "count": 0},
+            "Farm": {"cost": 500, "cps": 20, "count": 0},
+            "Factory": {"cost": 3000, "cps": 100, "count": 0},
+            "Mine": {"cost": 10000, "cps": 500, "count": 0},
+            "Shipment": {"cost": 40000, "cps": 2000, "count": 0},
+            "Alchemy Lab": {"cost": 200000, "cps": 10000, "count": 0},
+            "Portal": {"cost": 1666666, "cps": 50000, "count": 0},
+            "Time Machine": {"cost": 123456789, "cps": 1000000, "count": 0},
+            "Antimatter Condenser": {"cost": 9876543210, "cps": 5000000, "count": 0},
+            "Prism": {"cost": 123456789012, "cps": 10000000, "count": 0},
+            "Chancemaker": {"cost": 987654321098, "cps": 50000000, "count": 0},
+        }
 
-        # Load saved data
+        # Load player data
         self.load_data()
 
-        # UI setup
-        self.create_ui()
+        # GUI Setup
+        self.setup_gui()
 
-        # Start the CpS loop
+        # Start CPS update loop
         self.update_cookies_per_second()
 
-    def create_ui(self):
-        # Create the user interface.
+    def setup_gui(self):
+        """Set up the GUI components."""
+        # Cookie Button with Emoji
+        self.cookie_button = tk.Button(
+            self.root,
+            text="🍪",  # Use the cookie emoji
+            command=self.click_cookie,
+            font=("Arial", 50),  # Set a large font size for the emoji
+            bg="light yellow",  # Background color
+            activebackground="gold",  # Background color when clicked
+            relief="raised",  # Button style
+            bd=5,  # Border width
+            width=5,  # Button width
+            height=2,  # Button height
+        )
+        self.cookie_button.pack(pady=20)
 
-        # Cookie display
-        self.cookie_label = tk.Label(self.root, text=f"Cookies: {self.cookies:.1f}", font=("Arial", 20))
-        self.cookie_label.pack(pady=10)
+        # Cookie Counter
+        self.cookie_label = tk.Label(self.root, text=f"Cookies: {self.cookies:,}", font=("Arial", 16))
+        self.cookie_label.pack()
 
-        # Cookie button
-        # image = Image.open(COOKIE_IMAGE_PATH)
-        # self.cookie_photo = ImageTk.PhotoImage(image)
-        # self.cookie_button = tk.Button(self.root, image=self.cookie_photo, command=self.click_cookie)
-        # self.cookie_button.image = self.cookie_photo  # Prevent garbage collection
-        # self.cookie_button.pack(side="top", pady=10)
-
-        # Buildings frame
+        # Buildings Frame
         self.buildings_frame = tk.Frame(self.root)
         self.buildings_frame.pack(pady=20)
 
-        # Create building buttons
-        for building in BUILDINGS:
-            frame = tk.Frame(self.buildings_frame)
-            frame.pack(pady=5)
+        # Add building buttons
+        for building_name in self.buildings:
+            self.add_building_button(building_name)
 
-            name_label = tk.Label(frame, text=building["name"], font=("Arial", 14))
-            name_label.pack(side="left", padx=10)
+        # Save and Exit Button
+        self.save_button = tk.Button(self.root, text="Save and Exit", command=self.save_and_exit, font=("Arial", 14))
+        self.save_button.pack(pady=10)
 
-            cost_label = tk.Label(frame, text=f"Cost: {self.buildings[building['name']]['cost']}", font=("Arial", 12))
-            cost_label.pack(side="left", padx=10)
-
-            count_label = tk.Label(frame, text=f"Owned: {self.buildings[building['name']]['count']}", font=("Arial", 12))
-            count_label.pack(side="left", padx=10)
-
-            button = tk.Button(frame, text="Buy", command=lambda b=building: self.buy_building(b["name"]))
-            button.pack(side="left", padx=10)
-
-            # Save references for updating
-            self.buildings[building["name"]]["cost_label"] = cost_label
-            self.buildings[building["name"]]["count_label"] = count_label
+    def add_building_button(self, building_name):
+        """Add a button for purchasing a building."""
+        building = self.buildings[building_name]
+        button = tk.Button(
+            self.buildings_frame,
+            text=f"{building_name}\nCost: {building['cost']:,}\nCPS: {building['cps']:,}\nOwned: {building['count']}",
+            command=lambda: self.purchase_building(building_name),
+            font=("Arial", 12),
+            width=20,
+            height=4,
+        )
+        # Calculate row and column for grid placement
+        index = list(self.buildings.keys()).index(building_name)
+        row = index // 3  # 3 buttons per row
+        col = index % 3
+        button.grid(row=row, column=col, padx=10, pady=10)  # Add padding for spacing
+        building["button"] = button
 
     def click_cookie(self):
         """Handle cookie clicks."""
         self.cookies += 1
-        self.update_cookie_display()
+        self.update_cookie_label()
 
-    def buy_building(self, building_name):
-        """Buy a building."""
+    def update_cookie_label(self):
+        """Update the cookie counter label."""
+        self.cookie_label.config(text=f"Cookies: {self.cookies}")
+
+    def purchase_building(self, building_name):
+        """Handle purchasing a building."""
         building = self.buildings[building_name]
         if self.cookies >= building["cost"]:
             self.cookies -= building["cost"]
             building["count"] += 1
             building["cost"] = int(building["cost"] * 1.15)  # Increase cost by 15%
             self.cps += building["cps"]
-
-            # Update UI
-            self.update_cookie_display()
-            building["cost_label"].config(text=f"Cost: {building['cost']}")
-            building["count_label"].config(text=f"Owned: {building['count']}")
+            self.update_cookie_label()
+            self.update_building_button(building_name)
         else:
-            messagebox.showerror("Not Enough Cookies", f"You need {building['cost'] - self.cookies:.1f} more cookies to buy {building_name}.")
+            messagebox.showwarning("Not Enough Cookies", f"You need {building['cost'] - self.cookies} more cookies!")
 
-    def update_cookie_display(self):
-        """Update the cookie count display."""
-        self.cookie_label.config(text=f"Cookies: {self.cookies:.1f}")
+    def update_building_button(self, building_name):
+        """Update the text on a building button."""
+        building = self.buildings[building_name]
+        building["button"].config(
+            text=f"{building_name}\nCost: {building['cost']}\nCPS: {building['cps']}\nOwned: {building['count']}"
+        )
 
     def update_cookies_per_second(self):
-        # Update cookies based on CpS.
-        self.cookies += self.cps / 10  # Update every 0.1 seconds
-        self.update_cookie_display()
-        self.root.after(100, self.update_cookies_per_second)
-
-    def save_data(self):
-        # Save the game state to a CSV file.
-        data = {
-            "username": [self.current_user],
-            "cookies": [self.cookies],
-            "cps": [self.cps],
-        }
-        for building_name, building in self.buildings.items():
-            data[f"{building_name}_count"] = [building["count"]]
-            data[f"{building_name}_cost"] = [building["cost"]]
-
-        df = pd.DataFrame(data)
-        df.to_csv(COOKIE_DATA_PATH, index=False)
+        """Update cookies based on CPS."""
+        self.cookies += self.cps
+        self.update_cookie_label()
+        self.root.after(1000, self.update_cookies_per_second)
 
     def load_data(self):
-        # Load the game state from a CSV file.
-        if os.path.exists(COOKIE_DATA_PATH):
-            try:
-                df = pd.read_csv(COOKIE_DATA_PATH)
-                self.cookies = df["cookies"][0]
-                self.cps = df["cps"][0]
-                for building_name in self.buildings.keys():
-                    self.buildings[building_name]["count"] = int(df[f"{building_name}_count"][0])
-                    self.buildings[building_name]["cost"] = int(df[f"{building_name}_cost"][0])
-            except Exception as e:
-                print(f"Error loading data: {e}")
+        """Load player data from the CSV file."""
+        df = read_csv(COOKIE_DATA_PATH)  # Use the read_csv function
 
-    def on_close(self):
-        # Handle the window close event.
-        self.save_data()
-        self.root.destroy()
+        if df is not None:
+            df["username"] = df["username"].astype(str)  # Ensure all usernames are strings
 
+        if df is None or self.username not in df["username"].values:
+            # If the file doesn't exist, is empty, or the username doesn't exist, create a new account
+            self.save_data()
+            return
+
+        # Load existing player data
+        user_data = df[df["username"] == self.username].iloc[0]
+        self.cookies = int(user_data["cookies"])
+        self.cps = int(user_data["cps"])
+        for building_name in self.buildings:
+            self.buildings[building_name]["count"] = int(user_data[building_name])
+
+    def save_data(self):
+        """Save player data to the CSV file."""
+        # Create a dictionary for the current player's data
+        player_data = {
+            "username": self.username,
+            "cookies": self.cookies,
+            "cps": self.cps,
+        }
+        for building_name in self.buildings:
+            player_data[building_name] = self.buildings[building_name]["count"]
+
+        # Load existing data if the file exists
+        df = read_csv(COOKIE_DATA_PATH)
+        if df is None:
+            # Create an empty DataFrame with the required columns
+            df = pd.DataFrame(columns=["username", "cookies", "cps"] + list(self.buildings.keys()))
+
+        # Ensure the username column is treated as a string
+        if "username" in df.columns:
+            df["username"] = df["username"].astype(str)
+
+        # Check if the username exists in the DataFrame
+        if self.username in df["username"].values:
+            # Update the existing row for the username
+            for key, value in player_data.items():
+                df.loc[df["username"] == self.username, key] = value
+        else:
+            # Append a new row for the username
+            df = pd.concat([df, pd.DataFrame([player_data])], ignore_index=True)
+
+        # Save the updated DataFrame back to the CSV file
+        save_csv(COOKIE_DATA_PATH, df)
+
+    def save_and_exit(self):
+        """Save the game data and exit the application."""
+        self.save_data()  # Save the player's data to the CSV file
+        self.root.destroy()  # Close the application window
 
 if __name__ == "__main__":
+    username = input("Enter your username: ")
     root = tk.Tk()
-    app = CookieClicker(root)
-    root.protocol("WM_DELETE_WINDOW", app.on_close)  # Save data on close
+    game = CookieClicker(root, username)
     root.mainloop()

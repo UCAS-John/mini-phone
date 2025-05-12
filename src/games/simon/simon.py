@@ -7,16 +7,21 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..",
 from manage import scores
 
 class SimonGame:
-    def __init__(self, root):
+    def __init__(self, root, current_user=None):
         self.root = root
+        self.current_user = current_user    
         self.root.title("Simon Game")
         self.sequence = []
         self.player_sequence = []
         self.buttons = []
         self.score = 0
+        self.running = True  # Add a flag to track if the game is running
+        self.pending_after_id = None  # Track the ID of the scheduled `after` callback
         self.create_grid()
         self.start_button = tk.Button(root, text="Start Game", command=self.start_game, font=("Arial", 14))
         self.start_button.grid(row=3, column=0, columnspan=3, pady=10)
+        self.close_button = tk.Button(root, text="Close Game", command=self.close_game, font=("Arial", 14))
+        self.close_button.grid(row=6, column=0, columnspan=3, pady=10)
         self.info_label = tk.Label(root, text="Press Start to Begin", font=("Arial", 14))
         self.info_label.grid(row=4, column=0, columnspan=3, pady=10)
 
@@ -56,7 +61,7 @@ class SimonGame:
         if index < len(self.sequence):
             button = self.sequence[index]
             self.flash_button(button)
-            self.root.after(1000, self._play_sequence_step, index + 1)
+            self.pending_after_id = self.root.after(1000, self._play_sequence_step, index + 1)
         else:
             self.enable_buttons()
             self.info_label.config(text="Your turn!")
@@ -81,6 +86,7 @@ class SimonGame:
         else:
             self.info_label.config(text="Wrong! Game Over!")
             self.disable_buttons()
+            scores.save_score(username=self.current_user, game="simon", score=self.score)  # Save the score
             return self.score
 
     def enable_buttons(self):
@@ -94,3 +100,7 @@ class SimonGame:
         for row in self.buttons:
             for button in row:
                 button.config(state="disabled")
+
+    def close_game(self):
+        scores.save_score(username=self.current_user, game="simon", score=self.score)
+        self.root.destroy()
