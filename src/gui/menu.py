@@ -173,7 +173,7 @@ class Menu:
         try:
             message = login_profile(username, password)
             self.current_user = username
-            messagebox.showinfo("Login Successful", message) # Test
+            # messagebox.showinfo("Login Successful", message) # Test
             self.main_menu()
         except ValueError as e:
             messagebox.showerror("Login Failed", str(e))
