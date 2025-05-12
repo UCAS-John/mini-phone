@@ -1,5 +1,5 @@
 import tkinter as tk
-from cookie import CookieClicker
+from games.cookie_clicker.cookie import CookieClicker
 
 def cookie_main(username=None):
     root = tk.Tk()
@@ -7,4 +7,4 @@ def cookie_main(username=None):
     root.mainloop()
 
 if __name__ == "__main__":
-    cookie_main(1)
+    cookie_main("1")

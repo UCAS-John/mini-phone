@@ -10,13 +10,18 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..",
 from manage.file import read_csv, save_csv
 
 # Paths for cookie image and data
-COOKIE_IMAGE_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "images", "cookie.png")
-COOKIE_DATA_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "data", "cookies.csv")
+# COOKIE_IMAGE_PATH = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "images", "cookie.png"))
+# print("COOKIE_IMAGE_PATH:", COOKIE_IMAGE_PATH)
+# if not os.path.exists(COOKIE_IMAGE_PATH):
+#     raise FileNotFoundError(f"Image file not found at: {COOKIE_IMAGE_PATH}")
+# Cookie image keep not working i give up :(
+
+COOKIE_DATA_PATH = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "data", "cookies.csv"))
 
 class CookieClicker:
     def __init__(self, root, username):
         self.root = root
-        self.username = username
+        self.username = str(username)
         self.root.title("Cookie Clicker")
         self.cookies = 0
         self.cps = 0  # Cookies per second
@@ -46,13 +51,19 @@ class CookieClicker:
 
     def setup_gui(self):
         """Set up the GUI components."""
-        # Cookie Button with Image
-        cookie_image = Image.open(COOKIE_IMAGE_PATH)
-        cookie_image = cookie_image.resize((100, 100))  # Resize to 100x100 pixels
-        cookie_image = ImageTk.PhotoImage(cookie_image)
-
-        self.cookie_button = tk.Button(self.root, image=cookie_image, command=self.click_cookie)
-        self.cookie_button.image = cookie_image  # Keep a reference to avoid garbage collection
+        # Cookie Button with Emoji
+        self.cookie_button = tk.Button(
+            self.root,
+            text="🍪",  # Use the cookie emoji
+            command=self.click_cookie,
+            font=("Arial", 50),  # Set a large font size for the emoji
+            bg="light yellow",  # Background color
+            activebackground="gold",  # Background color when clicked
+            relief="raised",  # Button style
+            bd=5,  # Border width
+            width=5,  # Button width
+            height=2,  # Button height
+        )
         self.cookie_button.pack(pady=20)
 
         # Cookie Counter
@@ -128,22 +139,20 @@ class CookieClicker:
         """Load player data from the CSV file."""
         df = read_csv(COOKIE_DATA_PATH)  # Use the read_csv function
 
-        if df is None:
-            # If the file doesn't exist or is empty, create a new one with the current player's data
+        if df is not None:
+            df["username"] = df["username"].astype(str)  # Ensure all usernames are strings
+
+        if df is None or self.username not in df["username"].values:
+            # If the file doesn't exist, is empty, or the username doesn't exist, create a new account
             self.save_data()
             return
 
-        # Check if the username exists in the data
-        if self.username in df["username"].values:
-            # Load existing player data
-            user_data = df[df["username"] == self.username].iloc[0]
-            self.cookies = int(user_data["cookies"])
-            self.cps = int(user_data["cps"])
-            for building_name in self.buildings:
-                self.buildings[building_name]["count"] = int(user_data[building_name])
-        else:
-            # If the username does not exist, create a new account
-            self.save_data()
+        # Load existing player data
+        user_data = df[df["username"] == self.username].iloc[0]
+        self.cookies = int(user_data["cookies"])
+        self.cps = int(user_data["cps"])
+        for building_name in self.buildings:
+            self.buildings[building_name]["count"] = int(user_data[building_name])
 
     def save_data(self):
         """Save player data to the CSV file."""
@@ -161,6 +170,10 @@ class CookieClicker:
         if df is None:
             # Create an empty DataFrame with the required columns
             df = pd.DataFrame(columns=["username", "cookies", "cps"] + list(self.buildings.keys()))
+
+        # Ensure the username column is treated as a string
+        if "username" in df.columns:
+            df["username"] = df["username"].astype(str)
 
         # Check if the username exists in the DataFrame
         if self.username in df["username"].values:
