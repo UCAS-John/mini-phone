@@ -1,2 +1,2 @@
-username,cookies,cps,Cursor_count,Cursor_cost,Grandma_count,Grandma_cost,Farm_count,Farm_cost,Factory_count,Factory_cost,Mine_count,Mine_cost,Shipment_count,Shipment_cost,Alchemy Lab_count,Alchemy Lab_cost,Portal_count,Portal_cost,Time Machine_count,Time Machine_cost,Antimatter Condenser_count,Antimatter Condenser_cost,Prism_count,Prism_cost
-1,28.30999999999868,3.900000000000001,9,46,3,150,0,1100,0,12000,0,130000,0,1400000,0,20000000,0,166000000,0,1230000000,0,31000000000,0,750000000000
+username,cookies,cps,Cursor,Grandma,Farm,Factory,Mine,Shipment,Alchemy Lab,Portal,Time Machine,Antimatter Condenser,Prism,Chancemaker
+1,32,19,14,1,0,0,0,0,0,0,0,0,0,0

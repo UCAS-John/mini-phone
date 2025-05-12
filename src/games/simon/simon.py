@@ -3,20 +3,25 @@ import tkinter as tk
 import os
 import sys
 
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "src")))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "src")))
 from manage import scores
 
 class SimonGame:
-    def __init__(self, root):
+    def __init__(self, root, current_user=None):
         self.root = root
+        self.current_user = current_user    
         self.root.title("Simon Game")
         self.sequence = []
         self.player_sequence = []
         self.buttons = []
         self.score = 0
+        self.running = True  # Add a flag to track if the game is running
+        self.pending_after_id = None  # Track the ID of the scheduled `after` callback
         self.create_grid()
         self.start_button = tk.Button(root, text="Start Game", command=self.start_game, font=("Arial", 14))
         self.start_button.grid(row=3, column=0, columnspan=3, pady=10)
+        self.close_button = tk.Button(root, text="Close Game", command=self.close_game, font=("Arial", 14))
+        self.close_button.grid(row=6, column=0, columnspan=3, pady=10)
         self.info_label = tk.Label(root, text="Press Start to Begin", font=("Arial", 14))
         self.info_label.grid(row=4, column=0, columnspan=3, pady=10)
 
@@ -32,44 +37,44 @@ class SimonGame:
             self.buttons.append(row)
 
     def start_game(self):
-        """Start the game by resetting the sequence and adding the first pattern."""
+        # Start the game by resetting the sequence and adding the first pattern.
         self.sequence = []
         self.player_sequence = []
         self.info_label.config(text="Watch the pattern!")
         self.add_to_sequence()
 
     def add_to_sequence(self):
-        """Add a random button to the sequence and play it."""
+        # Add a random button to the sequence and play it.
         row = random.randint(0, 2)
         col = random.randint(0, 2)
         self.sequence.append(self.buttons[row][col])
         self.play_sequence()
 
     def play_sequence(self):
-        """Play the current sequence by flashing the buttons."""
+        # Play the current sequence by flashing the buttons.
         self.disable_buttons()
         self.info_label.config(text="Watch the pattern!")
         self.root.after(500, self._play_sequence_step, 0)
 
     def _play_sequence_step(self, index):
-        """Play each step of the sequence with a delay."""
+        # Play each step of the sequence with a delay.
         if index < len(self.sequence):
             button = self.sequence[index]
             self.flash_button(button)
-            self.root.after(1000, self._play_sequence_step, index + 1)
+            self.pending_after_id = self.root.after(1000, self._play_sequence_step, index + 1)
         else:
             self.enable_buttons()
             self.info_label.config(text="Your turn!")
 
     def flash_button(self, button):
-        """Flash a button by changing its color temporarily."""
+        # Flash a button by changing its color temporarily.
         original_color = button.cget("bg")
         button.config(bg="yellow")
         self.root.update()
         self.root.after(500, lambda: button.config(bg=original_color))
 
     def player_input(self, button):
-        """Handle the player's input."""
+        # Handle the player's input.
         self.player_sequence.append(button)
         self.flash_button(button)
         if self.player_sequence == self.sequence[:len(self.player_sequence)]:
@@ -81,16 +86,21 @@ class SimonGame:
         else:
             self.info_label.config(text="Wrong! Game Over!")
             self.disable_buttons()
-            scores.save_csv("data/scores.csv", {"username": "player", "simon": self.score})
+            scores.save_score(username=self.current_user, game="simon", score=self.score)  # Save the score
+            return self.score
 
     def enable_buttons(self):
-        """Enable all buttons for player input."""
+        # Enable all buttons for player input.
         for row in self.buttons:
             for button in row:
                 button.config(state="normal")
 
     def disable_buttons(self):
-        """Disable all buttons to prevent input."""
+        # Disable all buttons to prevent input.
         for row in self.buttons:
             for button in row:
                 button.config(state="disabled")
+
+    def close_game(self):
+        scores.save_score(username=self.current_user, game="simon", score=self.score)
+        self.root.destroy()

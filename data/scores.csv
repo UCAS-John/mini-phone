@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 username,hangman,number guessing,rock paper scissors,simon,simple quiz,tic tac toe,tic tace toe
 <<<<<<< HEAD,,,,,,,
 test_user,100.0,0.0,0.0,0.0,0.0,0.0,
@@ -12,3 +13,8 @@ test_user,100.0,0.0,0.0,0.0,0.0,0.0,
 1,54.0,4.0,4.0,0.0,0.0,,
 a,0.0,0.0,0.0,0.0,0.0,,0.0
 >>>>>>> 842bd378a4b2883168179f06c8cc2749e5c3bd2c,,,,,,,
+=======
+username,hangman,number guessing,rock paper scissors,simon,simple quiz,tic tac toe
+1,10,0,1,2,0,1
+rq,0,0,0,0,0,0
+>>>>>>> 84d8c9b2cdfd67f7299f38ebf1000f21708f0616

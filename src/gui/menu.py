@@ -8,12 +8,12 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")
 from profiles.profile import create_profile, delete_profile, login_profile
 from manage.scores import load_all, load_top, save_score
 
-from games.cookie_clicker.cookie_main import cookie as cookie_main
+from games.cookie_clicker.cookie_main import cookie_main 
 # from games.battle_simulator.battle_main import main as battle_main
 # from games.hangman.hangman_main import main as hangman_main
 from games.number_guessing.number_guessing_main import main as number_guessing_main
-from games.rock_paper_scissor.rps_main import main as rps_main
-from games.simon.simon_main import main as simon_main
+from games.rock_paper_scissor.rps_main import rps_main 
+from games.simon.simon_main import simon_main 
 from games.simple_quiz.quiz_main import main as quiz_main
 from games.tic_tac_toe.tic_tac_toe_main import play_game as tic_tac_toe_main
 
@@ -21,13 +21,13 @@ from games.tic_tac_toe.tic_tac_toe_main import play_game as tic_tac_toe_main
 IMAGE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "images")
 GAMES_SCRIPTS = {
     # "Battle Simulator": os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', "games", "battle_simulator", "main.py"), # Remove this game
-    "Cookie Clicker": cookie_main,
-    "Hangman": os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', "games", "Hangman", "hangman_main.py")),
-    "Number Guessing": number_guessing_main,
-    "Rock Paper Scissors": rps_main,
-    "Simon": simon_main,
-    "Simple Quiz": quiz_main,
-    "Tic Tac Toe": tic_tac_toe_main
+    "cookie clicker": cookie_main,
+    # "hangman": os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', "games", "Hangman", "hangman_main.py")),
+    "number guessing": number_guessing_main,
+    "rock paper scissors": rps_main,
+    "simon": simon_main,
+    "simple quiz": quiz_main,
+    "tic tac toe": tic_tac_toe_main
 }
 
 class Menu:
@@ -58,7 +58,7 @@ class Menu:
         tk.Button(self.root, text="Create Profile", font=("Arial", 14), command=self.create_profile_screen).pack(pady=10)
 
     def main_menu(self):
-        """Create the main menu after login."""
+        # Create the main menu after login.
         self.clear_screen()
 
         tk.Label(self.root, text=f"Welcome, {self.current_user}!", font=("Arial", 20, "bold")).pack(pady=20)
@@ -71,25 +71,25 @@ class Menu:
 
         # Create game buttons with a row limit of 5
         row, col = 0, 0
-        for game_name, script_path in GAMES_SCRIPTS.items():
+        for game_name, game_func in GAMES_SCRIPTS.items():
             # Load button image
-            image_path = os.path.join(IMAGE_DIR, f"{game_name.replace(' ', '_').lower()}.png")
-            if os.path.exists(image_path):
-                button_image = ImageTk.PhotoImage(Image.open(image_path).resize((50, 50)))
-            else:
-                button_image = None
+            # image_path = os.path.join(IMAGE_DIR, f"{game_name.replace(' ', '_').lower()}.png")
+            # if os.path.exists(image_path):
+            #     button_image = ImageTk.PhotoImage(Image.open(image_path).resize((50, 50)))
+            # else:
+            #     button_image = None
 
             # Create button
             button = tk.Button(
                 game_frame,
                 text=game_name,
-                image=button_image,
+                # image=button_image,
                 compound="top",
                 bg="light blue",                
                 font=("Arial", 12),
-                command=lambda path=script_path: self.run_game(path,game_name=game_name.lower())
+                command=lambda func=game_func, name=game_name: self.run_game(game_func=func, game_name=name)
             )
-            button.image = button_image  # Keep a reference to avoid garbage collection
+            # button.image = button_image  # Keep a reference to avoid garbage collection
             button.grid(row=row, column=col, padx=10, pady=10)
 
             # Add top score label below the button
@@ -177,14 +177,16 @@ class Menu:
             self.main_menu()
         except ValueError as e:
             messagebox.showerror("Login Failed", str(e))
+        except Exception as e:
+            messagebox.showerror("Error", f"An unexpected error occurred: {str(e)}")
 
     def logout(self):
-        """Handle user logout."""
+        # Handle user logout.
         self.current_user = None
         self.login_screen()
 
     def create_profile(self):
-        """Handle profile creation."""
+        # Handle profile creation.
         username = self.new_username_entry.get()
         password = self.new_password_entry.get()
 
@@ -192,9 +194,12 @@ class Menu:
             messagebox.showerror("Error", "Username and password cannot be empty!")
             return
 
-        message = create_profile(username, password)
-        messagebox.showinfo("Profile Created", message)
-        self.login_screen()
+        try:
+            message = create_profile(username, password)
+            messagebox.showinfo("Profile Created", message)
+            self.login_screen()
+        except ValueError as e:
+            messagebox.showerror("Error", str(e))
 
     def delete_profile(self):
         """Handle profile deletion."""
@@ -207,20 +212,23 @@ class Menu:
                 messagebox.showerror("Error", str(e))
 
     def run_game(self, game_func, game_name=None):
-        """Run the selected game."""
-        print(game_func)
+        # Run the selected game.
+        print(game_func.__name__)
         if callable(game_func):
-            score = game_func()
-            save_score(self.current_user, game_name, score)
+            if game_func.__name__ == "simon_main" or game_func.__name__ == "cookie_main":
+                game_func(self.current_user)
+            else:
+                score = game_func()
+                save_score(username=self.current_user, game=game_name, score=score)
             return
-    
+        
     def show_score(self):
         root = tk.Tk()
         root.title(f"{self.current_user} Scoreboard")
         root.geometry("600x400")
         scores = load_all(self.current_user)
 
-        print(scores)
+        # print(scores)
 
         for game, score in scores.items():
             if game == "username":
