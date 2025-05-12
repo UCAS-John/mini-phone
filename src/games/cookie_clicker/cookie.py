@@ -1,8 +1,13 @@
 import tkinter as tk
 from tkinter import messagebox
 from PIL import Image, ImageTk
+import pandas as pd
 import os
-import csv
+import sys
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
+
+from manage.file import read_csv, save_csv
 
 # Paths for cookie image and data
 COOKIE_IMAGE_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "images", "cookie.png")
@@ -25,6 +30,9 @@ class CookieClicker:
             "Alchemy Lab": {"cost": 200000, "cps": 10000, "count": 0},
             "Portal": {"cost": 1666666, "cps": 50000, "count": 0},
             "Time Machine": {"cost": 123456789, "cps": 1000000, "count": 0},
+            "Antimatter Condenser": {"cost": 9876543210, "cps": 5000000, "count": 0},
+            "Prism": {"cost": 123456789012, "cps": 10000000, "count": 0},
+            "Chancemaker": {"cost": 987654321098, "cps": 50000000, "count": 0},
         }
 
         # Load player data
@@ -48,7 +56,7 @@ class CookieClicker:
         self.cookie_button.pack(pady=20)
 
         # Cookie Counter
-        self.cookie_label = tk.Label(self.root, text=f"Cookies: {self.cookies}", font=("Arial", 16))
+        self.cookie_label = tk.Label(self.root, text=f"Cookies: {self.cookies:,}", font=("Arial", 16))
         self.cookie_label.pack()
 
         # Buildings Frame
@@ -68,7 +76,7 @@ class CookieClicker:
         building = self.buildings[building_name]
         button = tk.Button(
             self.buildings_frame,
-            text=f"{building_name}\nCost: {building['cost']}\nCPS: {building['cps']}\nOwned: {building['count']}",
+            text=f"{building_name}\nCost: {building['cost']:,}\nCPS: {building['cps']:,}\nOwned: {building['count']}",
             command=lambda: self.purchase_building(building_name),
             font=("Arial", 12),
             width=20,
@@ -118,55 +126,58 @@ class CookieClicker:
 
     def load_data(self):
         """Load player data from the CSV file."""
-        if not os.path.exists(COOKIE_DATA_PATH):
+        df = read_csv(COOKIE_DATA_PATH)  # Use the read_csv function
+
+        if df is None:
+            # If the file doesn't exist or is empty, create a new one with the current player's data
+            self.save_data()
             return
 
-        with open(COOKIE_DATA_PATH, "r") as file:
-            reader = csv.DictReader(file)
-            for row in reader:
-                if row["username"] == self.username:
-                    self.cookies = int(row["cookies"])
-                    self.cps = int(row["cps"])
-                    for building_name in self.buildings:
-                        self.buildings[building_name]["count"] = int(row[building_name])
-                    break
+        # Check if the username exists in the data
+        if self.username in df["username"].values:
+            # Load existing player data
+            user_data = df[df["username"] == self.username].iloc[0]
+            self.cookies = int(user_data["cookies"])
+            self.cps = int(user_data["cps"])
+            for building_name in self.buildings:
+                self.buildings[building_name]["count"] = int(user_data[building_name])
+        else:
+            # If the username does not exist, create a new account
+            self.save_data()
 
     def save_data(self):
         """Save player data to the CSV file."""
-        data = []
-        if os.path.exists(COOKIE_DATA_PATH):
-            with open(COOKIE_DATA_PATH, "r") as file:
-                reader = csv.DictReader(file)
-                data = list(reader)
+        # Create a dictionary for the current player's data
+        player_data = {
+            "username": self.username,
+            "cookies": self.cookies,
+            "cps": self.cps,
+        }
+        for building_name in self.buildings:
+            player_data[building_name] = self.buildings[building_name]["count"]
 
-        # Update or add the current player's data
-        updated = False
-        for row in data:
-            if row["username"] == self.username:
-                row["cookies"] = self.cookies
-                row["cps"] = self.cps
-                for building_name in self.buildings:
-                    row[building_name] = self.buildings[building_name]["count"]
-                updated = True
-                break
+        # Load existing data if the file exists
+        df = read_csv(COOKIE_DATA_PATH)
+        if df is None:
+            # Create an empty DataFrame with the required columns
+            df = pd.DataFrame(columns=["username", "cookies", "cps"] + list(self.buildings.keys()))
 
-        if not updated:
-            row = {"username": self.username, "cookies": self.cookies, "cps": self.cps}
-            for building_name in self.buildings:
-                row[building_name] = self.buildings[building_name]["count"]
-            data.append(row)
+        # Check if the username exists in the DataFrame
+        if self.username in df["username"].values:
+            # Update the existing row for the username
+            for key, value in player_data.items():
+                df.loc[df["username"] == self.username, key] = value
+        else:
+            # Append a new row for the username
+            df = pd.concat([df, pd.DataFrame([player_data])], ignore_index=True)
 
-        # Write data back to the CSV file
-        with open(COOKIE_DATA_PATH, "w", newline="") as file:
-            fieldnames = ["username", "cookies", "cps"] + list(self.buildings.keys())
-            writer = csv.DictWriter(file, fieldnames=fieldnames)
-            writer.writeheader()
-            writer.writerows(data)
+        # Save the updated DataFrame back to the CSV file
+        save_csv(COOKIE_DATA_PATH, df)
 
     def save_and_exit(self):
-        """Save the game and exit."""
-        self.save_data()
-        self.root.destroy()
+        """Save the game data and exit the application."""
+        self.save_data()  # Save the player's data to the CSV file
+        self.root.destroy()  # Close the application window
 
 if __name__ == "__main__":
     username = input("Enter your username: ")

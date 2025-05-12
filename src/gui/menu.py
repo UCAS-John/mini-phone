@@ -8,7 +8,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")
 from profiles.profile import create_profile, delete_profile, login_profile
 from manage.scores import load_all, load_top, save_score
 
-from games.cookie_clicker.cookie_main import cookie as cookie_main
+from games.cookie_clicker.cookie_main import cookie_main 
 # from games.battle_simulator.battle_main import main as battle_main
 # from games.hangman.hangman_main import main as hangman_main
 from games.number_guessing.number_guessing_main import main as number_guessing_main
@@ -215,7 +215,7 @@ class Menu:
         # Run the selected game.
         print(game_func.__name__)
         if callable(game_func):
-            if game_func.__name__ == "simon_main":
+            if game_func.__name__ == "simon_main" or game_func.__name__ == "cookie_main":
                 game_func(self.current_user)
             else:
                 score = game_func()
