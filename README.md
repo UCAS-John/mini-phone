@@ -1,4 +1,5 @@
 # Final Project
+
 ## Project Description
 ---
 Paragraph describing the purpose of your project and what it does  
@@ -10,24 +11,25 @@ Paragraph describing how to use the project
 
 ## Used Technologies
 ---
-+ First library in the repository
-`pip install code for the library`
-+ Second library in the repository
-`pip install code for the library`
-+ Third library in the repository
-`pip install code for the library`  
++ Pandas
+`pip install pandas`
++ Tkinter
+`pip install tkinter`
++ Faker 
+`pip install Faker`
+
 
 ## Curent Features
 ---
-+ First feature I am proud of
-+ Second feature I am proud of 
-+ Third feature I am proud of
++ Firstly I am proud of syncing the buttons to the games using both the terminal and pop up windows.
++ Secondly I am proud of the formatting, layout, and ways to improve hpow it looks. 
++ Thirdly I am proud of how we made so many gtames and implemented them to be able to run in the terminal and be able to go back to the pop up everytime without any errors.
 
 ## Contributors
 ---
-+ Person who helped - what they did 
-+ Person who helped - what they did 
-+ Person who helped - what they did  
++ Google - helped with small questions and tweak code for better formatting
++ Copilot - Helped with the layout and provided me some aid with errors especially with tkinter. It helped me learn more about making pop up windows.
++ Dad Saldana - helped Lizzy figure out how to make hangman work with python library Faker. 
 
 ## Authors Information
 ---
