@@ -16,14 +16,18 @@ def main():
 
 """)
     
-    print("welcome to the number guessing game this game is very simple you keep guessing numbers till you get the right one. (if you want to leave at any given point in time input done.)")
+    print("welcome to the number guessing game this game is very simple you keep guessing numbers till you get the right one. (if you want to leave at any given point in time input done.)(the numbers are 1-1000)")
     #main for num guess
     while True:
 
-        num_guess=int(input("what is your guess for the number?? "))
-        #makes sure that the number that the user put in is a number
-        if not isinstance(num_guess, int):
-            print("bud, choose a number it ain't that hard. 😊")
+        while True:
+            try:
+                num_guess=int(input("what is your guess for the number?? "))
+                break
+                #makes sure that the number that the user put in is a number
+            except:
+                print("bud, choose a number it ain't that hard. 😊")
+                continue
         
 
         if num_guess == rand_num:
@@ -34,7 +38,7 @@ def main():
             break
         #teams easter eggs
         elif num_guess == 123:
-            print("I wish I could have put the bible here bible, the enitre thing.")
+            print("I wish I could have put the bible here, the enitre thing.")
         elif num_guess == 429:
             print(""" IS that.. glitter on your lips?
                 MMMM cherry flavoured... want a taste?

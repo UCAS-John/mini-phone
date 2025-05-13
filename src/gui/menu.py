@@ -26,7 +26,7 @@ GAMES_SCRIPTS = {
     "number guessing": number_guessing_main,
     "rock paper scissors": rps_main,
     "simon": simon_main,
-    "simple quiz": quiz_main,
+    "impossible quiz": quiz_main,
     "tic tac toe": tic_tac_toe_main
 }
 
