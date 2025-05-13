@@ -2,10 +2,10 @@ import random
 
 # import num_gess_score as scores
 
-score = 0
-
 # Rando mTemplate jus remove it
-def main(score):
+def main():
+
+    score = 0
     rand_num = random.randint(1,1000)
     print("""
 
@@ -58,4 +58,4 @@ def main(score):
             score += 1
 
 if __name__ == "__main__":
-    score = main(score)
+    score = main()
