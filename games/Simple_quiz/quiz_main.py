@@ -36,7 +36,7 @@ def impossible(question_num, score):
                     ans = random.randint(1,4)
 
                     print("quetion:")
-                    print(ans)
+                
                     print(fake.text())
 
                     print("1:")
