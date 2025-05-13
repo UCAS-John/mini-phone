@@ -17,11 +17,11 @@ def main(score):
 """)
     
     print("welcome to the number guessing game this game is very simple you keep guessing numbers till you get the right one. (if you want to leave at any given point in time input done.)")
-
+    #main for num guess
     while True:
 
         num_guess=int(input("what is your guess for the number?? "))
-
+        #makes sure that the number that the user put in is a number
         if not isinstance(num_guess, int):
             print("bud, choose a number it ain't that hard. 😊")
         
@@ -32,6 +32,7 @@ def main(score):
             return score
 
             break
+        #teams easter eggs
         elif num_guess == 123:
             print("I wish I could have put the bible here bible, the enitre thing.")
         elif num_guess == 429:
