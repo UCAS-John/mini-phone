@@ -10,7 +10,7 @@ from manage.scores import load_all, load_top, save_score
 
 from games.cookie_clicker.cookie_main import cookie_main 
 # from games.battle_simulator.battle_main import main as battle_main
-# from games.hangman.hangman_main import main as hangman_main
+from games.hangman.hangman_main import main as hangman_main
 from games.number_guessing.number_guessing_main import main as number_guessing_main
 from games.rock_paper_scissor.rps_main import rps_main 
 from games.simon.simon_main import simon_main 
@@ -22,7 +22,7 @@ IMAGE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "imag
 GAMES_SCRIPTS = {
     # "Battle Simulator": os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', "games", "battle_simulator", "main.py"), # Remove this game
     "cookie clicker": cookie_main,
-    # "hangman": os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', "games", "Hangman", "hangman_main.py")),
+    "hangman": hangman_main,
     "number guessing": number_guessing_main,
     "rock paper scissors": rps_main,
     "simon": simon_main,
