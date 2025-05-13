@@ -3,14 +3,14 @@ from manage.file import read_csv, save_csv
 from typing import Literal
 import pandas as pd
 
-_TYPES = Literal["hangman", "number guessing", "rock paper scissors", "simon", "simple quiz", "tic tac toe", "cookie"]
+_TYPES = Literal["hangman", "number guessing", "rock paper scissors", "simon", "simple quiz", "tic tac toe", "cookie clicker"]
 
 PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "data", "scores.csv"))
 
 def save_score(username: str, game: _TYPES, score: int):
     data = read_csv(PATH)
     if data is None:
-        data = pd.DataFrame(columns=["username", "hangman", "number guessing", "rock paper scissors", "simon", "simple quiz", "tic tac toe", "cookie"])
+        data = pd.DataFrame(columns=["username", "hangman", "number guessing", "rock paper scissors", "simon", "simple quiz", "tic tac toe", "cookie clicker"])
     if game not in data.columns:
         raise ValueError(f"Game '{game}' is not a valid game type.")
 
@@ -31,7 +31,7 @@ def load_score(username, game: _TYPES):
     if data is None:
         return None
     if game not in data.columns:
-        data = pd.DataFrame(columns=["username", "hangman", "number guessing", "rock paper scissors", "simon", "simple quiz", "tic tac toe", "cookie"])
+        data = pd.DataFrame(columns=["username", "hangman", "number guessing", "rock paper scissors", "simon", "simple quiz", "tic tac toe", "cookie clicker"])
 
     data = data[data["username"] == username]
 
