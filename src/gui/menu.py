@@ -36,6 +36,7 @@ class Menu:
         self.root.title("Game Launcher")
         self.root.geometry("1200x800")
         self.current_user = None
+        self.game_running = False
 
         # Initialize UI
         self.login_screen()
@@ -215,13 +216,20 @@ class Menu:
 
     def run_game(self, game_func, game_name=None):
         # Run the selected game.
-        print(game_func.__name__)
-        if callable(game_func):
+        # print(game_func.__name__)
+        if self.game_running:
+            messagebox.showwarning("Game Running", "Please finish the current game before starting a new one.")
+            return
+        elif callable(game_func):
             if game_func.__name__ == "simon_main" or game_func.__name__ == "cookie_main":
+                self.game_running = True
                 game_func(self.current_user)
+                self.game_running = False
             else:
+                self.game_running = True
                 score = game_func()
                 save_score(username=self.current_user, game=game_name, score=score)
+                self.game_running = False
             return
         
     def show_score(self):
