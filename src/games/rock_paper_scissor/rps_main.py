@@ -1,6 +1,6 @@
-#Alishya Xavier, Profiecency test: Rock, Paper, Scissors
 import random
 
+#This is the rock paper scissors game
 def rps_main():
     print('''
 
@@ -11,12 +11,19 @@ def rps_main():
   \/_/ /_/   \/_____/   \/_____/   \/_/\/_/         \/_/     \/_/\/_/   \/_/     \/_____/   \/_/ /_/         \/_____/   \/_____/   \/_/   \/_____/   \/_____/   \/_____/   \/_/ /_/   \/_____/ 
                                                                                                                                                                                                
 ''')
+    #keeps track of the comp and users score
     score = 0
     comp_score = 0
+    #This is the loop that keeps going if the user wants to play again
     while True:
+        #The list that the random generator chooses from
         computer = ['rock', 'paper', 'scissors']
+        #The options the user can type in
         user = input('Type in your choice(rock, paper, or scissors): ')
+        #Randomly chooses from the list
         computer_choice = random.choice(computer)
+
+        #All the different options for a win or tie etc.
         print('The computer chose .......\n', computer_choice)
         if computer_choice == 'rock' and user == 'rock':
             print('This was a tie')
@@ -42,19 +49,24 @@ def rps_main():
         elif computer_choice == 'scissors' and user == 'rock':
             print('You won this round,')
             score+=1
+        #Error Handling
         else:
             print('That is not one of the options')
         
+        #The options fo the user to play again or exit
         choice = input('What would you like to do:\n1. Play again\n2. Exit\nChoice: ')
         if choice == '1':
             continue
         elif choice == '2':
+            #Shows the user their final score and saves it to the personal score 
             print('Your final score is:',score)
             print('The computers final score is:', comp_score)
             return score
+        #Error Handling
         else:
             print('That is not an option')
             continue
+
 
 if __name__ == "__main__":
     score = rps_main()

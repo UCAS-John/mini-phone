@@ -8,6 +8,7 @@ import sys
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
 
 from manage.file import read_csv, save_csv
+from manage.scores import save_score
 
 # Paths for cookie image and data
 # COOKIE_IMAGE_PATH = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "images", "cookie.png"))
@@ -190,6 +191,7 @@ class CookieClicker:
     def save_and_exit(self):
         """Save the game data and exit the application."""
         self.save_data()  # Save the player's data to the CSV file
+        save_score(self.username, "cookie", self.cookies)
         self.root.destroy()  # Close the application window
 
 if __name__ == "__main__":
