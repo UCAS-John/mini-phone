@@ -41,7 +41,7 @@ class Menu:
         self.login_screen()
 
     def login_screen(self):
-        """Create the login screen."""
+        # Create the login screen.
         self.clear_screen()
 
         tk.Label(self.root, text="Login", font=("Arial", 20, "bold")).pack(pady=20)
@@ -78,6 +78,8 @@ class Menu:
             #     button_image = ImageTk.PhotoImage(Image.open(image_path).resize((50, 50)))
             # else:
             #     button_image = None
+
+            # Close the idea of using picture, too much work and very buggy
 
             # Create button
             button = tk.Button(
@@ -144,7 +146,7 @@ class Menu:
         logout_button.pack()
 
     def create_profile_screen(self):
-        """Create the profile creation screen."""
+        # Create the profile creation screen.
         self.clear_screen()
 
         tk.Label(self.root, text="Create Profile", font=("Arial", 20, "bold")).pack(pady=20)
@@ -161,12 +163,12 @@ class Menu:
         tk.Button(self.root, text="Back to Login", font=("Arial", 14), command=self.login_screen).pack(pady=10)
 
     def clear_screen(self):
-        """Clear all widgets from the screen."""
+        # Clear all widgets from the screen.
         for widget in self.root.winfo_children():
             widget.destroy()
 
     def login(self):
-        """Handle user login."""
+        # Handle user login.
         username = self.username_entry.get()
         password = self.password_entry.get()
 
@@ -202,7 +204,7 @@ class Menu:
             messagebox.showerror("Error", str(e))
 
     def delete_profile(self):
-        """Handle profile deletion."""
+        # Handle profile deletion.
         if messagebox.askyesno("Delete Profile", "Are you sure you want to delete your profile?"):
             try:
                 message = delete_profile(self.current_user)
