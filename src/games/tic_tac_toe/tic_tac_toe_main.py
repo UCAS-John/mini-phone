@@ -36,7 +36,7 @@ def play_game():
 
   print('This is a Tic-Tac-Toe game and all of the instructions\n'
           'are just like a normal game of Tic-Tac-Toe but instead\n'
-          'of writing the X, you just type in a number (0-8) to\n'
+          'of writing the X, you just type in a number (1-9) to\n'
           'place the X left to right and it goes like that \n'
           'for each of the rows.')
   #This function actually asks the questions and puts the spots into the board
@@ -45,18 +45,10 @@ def play_game():
       board = [" " for _ in range(9)]
       current_player = "X"
 
-<<<<<<< HEAD
-        if check_win(board, current_player):
-            print_board(board)
-            print(f"Player {current_player} wins!")
-            if current_player == 'X':
-               score+=1
-            else:
-               #working on it
-               break
-=======
       # Show current score and board positions
       print(f"\nSCORE - You: {player_score} | Computer: {computer_score}")
+      print("\nBoard positions:")
+      print_board([str(i) for i in range(9)])
       print("\nGame starting!")
 
       # Main game loop
@@ -74,7 +66,7 @@ def play_game():
                       else:
                           print("Invalid move. Try again.")
                   except ValueError:
-                      print("Please enter a valid number between 0 and 8.")
+                      print("Please enter a valid number between 1 and 9.")
           else:
               move = computer(board)
               board[move] = current_player
@@ -96,7 +88,6 @@ def play_game():
               print("\nIt's a tie!")
               print(f"SCORE - You: {player_score} | Computer: {computer_score}")
               break
->>>>>>> 84d8c9b2cdfd67f7299f38ebf1000f21708f0616
 
           current_player = "O" if current_player == "X" else "X"
 
@@ -113,76 +104,12 @@ def play_game():
   print(f"You: {player_score}")
   print(f"Computer: {computer_score}")
   if player_score > computer_score:
-      print("congrats you won!!")
+      print("🏆 Congratulations! You won more games!")
   elif computer_score > player_score:
-      print("LOSER. try better next time")
+      print("Better luck next time! The computer won more games.")
   else:
       print("It's a tie in the overall score!")
   return player_score
-
-if __name__ == "__main__":
-<<<<<<< HEAD
-   play_game()
-
-def main():
-
-    def print_board(board):
-        """Prints the Tic-Tac-Toe board."""
-        for i in range(3):
-            print(" | ".join(board[i * 3:(i + 1) * 3]))
-            if i < 2:
-                print("-" * 9)
-        print()
-
-    def check_winner(board, mark):
-        """Checks if a player has won."""
-        win_conditions = [
-            [0, 1, 2], [3, 4, 5], [6, 7, 8],  # Rows
-            [0, 3, 6], [1, 4, 7], [2, 5, 8],  # Columns
-            [0, 4, 8], [2, 4, 6]              # Diagonals
-        ]
-        return any(all(board[i] == mark for i in condition) for condition in win_conditions)
-
-    def tic_tac_toe():
-        board = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
-        available_moves = set(board)
-        
-        print("Welcome to Tic-Tac-Toe!")
-        print_board(board)
-
-        while True:
-            # Human move
-            while True:
-                human_move = input("Enter your move (1-9): ")
-                if human_move in available_moves:
-                    break
-                print("Invalid move. Try again.")
-
-            board[int(human_move) - 1] = 'X'
-            available_moves.remove(human_move)
-            print_board(board)
-
-            if check_winner(board, 'X'):
-                print("You won!")
-                return "Tic-Tac-Toe", "Player"
-
-            if not available_moves:
-                print("It's a draw!")
-                return "Tic-Tac-Toe", "Draw"
-
-            # Computer move
-            computer_move = random.choice(list(available_moves))
-            print(f"Computer chose: {computer_move}")
-            board[int(computer_move) - 1] = 'O'
-            available_moves.remove(computer_move)
-            print_board(board)
-
-            if check_winner(board, 'O'):
-                print("Computer won!")
-                return "Tic-Tac-Toe", "Computer"
-            
+#Lastly this uses a specific name the computer knows to start the program at the play_game function
 if __name__ == "__main__":
    play_game()
-=======
-   play_game()
->>>>>>> 84d8c9b2cdfd67f7299f38ebf1000f21708f0616
