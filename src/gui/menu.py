@@ -22,7 +22,7 @@ IMAGE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "imag
 GAMES_SCRIPTS = {
     # "Battle Simulator": os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', "games", "battle_simulator", "main.py"), # Remove this game
     "cookie clicker": cookie_main,
-    # "hangman": os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', "games", "Hangman", "hangman_main.py")),
+    "hangman": hangman_main,
     "number guessing": number_guessing_main,
     "rock paper scissors": rps_main,
     "simon": simon_main,
