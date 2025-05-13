@@ -36,7 +36,7 @@ def play_game():
 
   print('This is a Tic-Tac-Toe game and all of the instructions\n'
           'are just like a normal game of Tic-Tac-Toe but instead\n'
-          'of writing the X, you just type in a number (0-8) to\n'
+          'of writing the X, you just type in a number (1-9) to\n'
           'place the X left to right and it goes like that \n'
           'for each of the rows.')
   #This function actually asks the questions and puts the spots into the board
@@ -59,18 +59,18 @@ def play_game():
           if current_player == "X":
               while True:
                   try:
-                      move = int(input("Enter your move (0-8): "))
+                      move = int(input("Enter your move (1-9): "))-1
                       if 0 <= move <= 8 and board[move] == " ":
                           board[move] = current_player
                           break
                       else:
                           print("Invalid move. Try again.")
                   except ValueError:
-                      print("Please enter a valid number between 0 and 8.")
+                      print("Please enter a valid number between 1 and 9.")
           else:
               move = computer(board)
               board[move] = current_player
-              print(f"Computer's move: {move}")
+              print(f"Computer's move: {move+1}")
           
           if check_win(board,current_player):
              print_board(board)
