@@ -7,13 +7,15 @@ import sys
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
 
 from manage.file import read_csv, save_csv
+from manage.scores import save_score
 
 # Paths for cookie image and data
 # COOKIE_IMAGE_PATH = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "images", "cookie.png"))
 # print("COOKIE_IMAGE_PATH:", COOKIE_IMAGE_PATH)
 # if not os.path.exists(COOKIE_IMAGE_PATH):
 #     raise FileNotFoundError(f"Image file not found at: {COOKIE_IMAGE_PATH}")
-# Cookie image keep not working i give up :(
+
+# Cookie image keep not working i give up :( Use emoji 🍪 instead
 
 COOKIE_DATA_PATH = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "data", "cookies.csv"))
 
@@ -23,7 +25,7 @@ class CookieClicker:
         self.username = str(username)
         self.root.title("Cookie Clicker")
         self.cookies = 0
-        self.cps = 0  # Cookies per second
+        self.cps = 0  # Cookies per second use "cps" for easy and short
         self.buildings = {
             "Cursor": {"cost": 10, "cps": 1, "count": 0},
             "Grandma": {"cost": 100, "cps": 5, "count": 0},
@@ -82,7 +84,7 @@ class CookieClicker:
         self.save_button.pack(pady=10)
 
     def add_building_button(self, building_name):
-        """Add a button for purchasing a building."""
+        # Add a button for purchasing a building.
         building = self.buildings[building_name]
         button = tk.Button(
             self.buildings_frame,
@@ -100,16 +102,16 @@ class CookieClicker:
         building["button"] = button
 
     def click_cookie(self):
-        """Handle cookie clicks."""
+        # Handle cookie clicks.
         self.cookies += 1
         self.update_cookie_label()
 
     def update_cookie_label(self):
-        """Update the cookie counter label."""
+        # Update the cookie counter label.
         self.cookie_label.config(text=f"Cookies: {self.cookies}")
 
     def purchase_building(self, building_name):
-        """Handle purchasing a building."""
+        # Handle purchasing a building.
         building = self.buildings[building_name]
         if self.cookies >= building["cost"]:
             self.cookies -= building["cost"]
@@ -122,20 +124,20 @@ class CookieClicker:
             messagebox.showwarning("Not Enough Cookies", f"You need {building['cost'] - self.cookies} more cookies!")
 
     def update_building_button(self, building_name):
-        """Update the text on a building button."""
+        # Update the text on a building button.
         building = self.buildings[building_name]
         building["button"].config(
             text=f"{building_name}\nCost: {building['cost']}\nCPS: {building['cps']}\nOwned: {building['count']}"
         )
 
     def update_cookies_per_second(self):
-        """Update cookies based on CPS."""
+        # Update cookies based on CPS.
         self.cookies += self.cps
         self.update_cookie_label()
         self.root.after(1000, self.update_cookies_per_second)
 
     def load_data(self):
-        """Load player data from the CSV file."""
+        # Load player data from the CSV file.
         df = read_csv(COOKIE_DATA_PATH)  # Use the read_csv function
 
         if df is not None:
@@ -154,7 +156,7 @@ class CookieClicker:
             self.buildings[building_name]["count"] = int(user_data[building_name])
 
     def save_data(self):
-        """Save player data to the CSV file."""
+        # Save player data to the CSV file.
         # Create a dictionary for the current player's data
         player_data = {
             "username": self.username,
@@ -187,8 +189,9 @@ class CookieClicker:
         save_csv(COOKIE_DATA_PATH, df)
 
     def save_and_exit(self):
-        """Save the game data and exit the application."""
+        # Save the game data and exit the application.
         self.save_data()  # Save the player's data to the CSV file
+        save_score(self.username, "cookie", self.cookies)
         self.root.destroy()  # Close the application window
 
 if __name__ == "__main__":

@@ -1,4 +1,3 @@
-#Alishya Xavier, TicTacToe project
 import random
 
 def print_board(board):
@@ -19,6 +18,7 @@ def check_win(board, player):
                           [2, 5, 8],
                           [0, 4, 8],
                           [2, 4, 6]]
+  #Loops the winning options
   for combo in winning_combinations:
       if board[combo[0]] == board[combo[1]] == board[combo[2]] == player:
           return True
@@ -30,6 +30,7 @@ def computer(board):
   return random.choice(empty_spaces)
 
 def play_game():
+  #Starting scores
   player_score = 0
   computer_score = 0
   playing = True
@@ -39,7 +40,6 @@ def play_game():
           'of writing the X, you just type in a number (1-9) to\n'
           'place the X left to right and it goes like that \n'
           'for each of the rows.')
-  #This function actually asks the questions and puts the spots into the board
 
   while playing:
       board = [" " for _ in range(9)]
@@ -47,15 +47,20 @@ def play_game():
 
       # Show current score and board positions
       print(f"\nSCORE - You: {player_score} | Computer: {computer_score}")
+      print("\nBoard positions:")
+      print_board([str(i) for i in range(9)])
       print("\nGame starting!")
 
-      # Main game loop
+      #  Main game loop
       while True:
+          #Displays the board
           print_board(board)
           print(f"Player {current_player}'s turn.")
 
+          # Users move
           if current_player == "X":
               while True:
+                  #makes sure that their move is actually one of the options open
                   try:
                       move = int(input("Enter your move (1-9): "))-1
                       if 0 <= move <= 8 and board[move] == " ":
@@ -63,13 +68,16 @@ def play_game():
                           break
                       else:
                           print("Invalid move. Try again.")
+                  #Error Handling
                   except ValueError:
-                      print("Please enter a valid number between 0 and 8.")
+                      print("Please enter a valid number between 1 and 9.")
+          #Turns it to the computers move  
           else:
               move = computer(board)
               board[move] = current_player
               print(f"Computer's move: {move+1}")
           
+          #Checks if the user or the computer has won
           if check_win(board,current_player):
              print_board(board)
              if current_player == "X":
@@ -81,12 +89,12 @@ def play_game():
              print(f"SCORE - You: {player_score} | Computer: {computer_score}")
              break
 
+          #Checks if there is a tie between the comp and user
           if " " not in board:
               print_board(board)
               print("\nIt's a tie!")
               print(f"SCORE - You: {player_score} | Computer: {computer_score}")
               break
-
           current_player = "O" if current_player == "X" else "X"
 
       # Ask to play again
@@ -102,12 +110,14 @@ def play_game():
   print(f"You: {player_score}")
   print(f"Computer: {computer_score}")
   if player_score > computer_score:
-      print("congrats you won!!")
+      print("🏆 Congratulations! You won more games!")
   elif computer_score > player_score:
-      print("LOSER. try better next time")
+      print("Better luck next time! The computer won more games.")
   else:
       print("It's a tie in the overall score!")
+  print('Please return back to the main menu to select another game!')
   return player_score
+
 
 if __name__ == "__main__":
    play_game()
