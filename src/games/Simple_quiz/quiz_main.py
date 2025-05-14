@@ -2,10 +2,6 @@ import os
 
 import random
 
-score = 0
-
-question_num = 0
-
 question_num = 0
 
 from faker import Faker
@@ -24,6 +20,9 @@ def impossible(question_num, score):
 
                     print("quetion:")
                 
+                    print("quetion:")
+                    print(ans)
+
                     print(fake.text())
 
                     print("1:")
@@ -39,6 +38,7 @@ def impossible(question_num, score):
                     print(fake.text())
 
                     #asks and stops them from poor choises
+
                     while True:
                         user_ans = input("sooo what do you think it is?? (pick the number associate with the answer) ").strip()
                         if user_ans.isdigit():
@@ -49,6 +49,7 @@ def impossible(question_num, score):
                             continue
 
                     #tells them they got it right
+
                     if user_ans == ans:
                         os.system('cls')
                         print("WOW!! you got it right!")
@@ -58,6 +59,7 @@ def impossible(question_num, score):
                         score +=1
 
                     #tells the they got it wrong
+
                     elif user_ans != ans:
                         os.system('cls')
                         print("well, thats not it but that's not very supprising.")
@@ -89,6 +91,7 @@ def main():
 
     while True:
         #tells them about the quiz
+
         if difficulty == "1":
             start = input(""" you chose the impossible level B T doub this one works a little diffrent the first line is the quetion the second is the first answer, third second answer etc. this quiz is close note, internet and friend(s).
                         press space and then enter when you are ready.""")

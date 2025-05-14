@@ -10,7 +10,7 @@ from manage.scores import load_all, load_top, save_score
 
 from games.cookie_clicker.cookie_main import cookie_main 
 # from games.battle_simulator.battle_main import main as battle_main
-# from games.hangman.hangman_main import main as hangman_main
+from games.hangman.hangman_main import main as hangman_main
 from games.number_guessing.number_guessing_main import main as number_guessing_main
 from games.rock_paper_scissor.rps_main import rps_main 
 from games.simon.simon_main import simon_main 
@@ -22,7 +22,7 @@ IMAGE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "imag
 GAMES_SCRIPTS = {
     # "Battle Simulator": os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', "games", "battle_simulator", "main.py"), # Remove this game
     "cookie clicker": cookie_main,
-    # "hangman": os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', "games", "Hangman", "hangman_main.py")),
+    "hangman": hangman_main,
     "number guessing": number_guessing_main,
     "rock paper scissors": rps_main,
     "simon": simon_main,
@@ -36,12 +36,13 @@ class Menu:
         self.root.title("Game Launcher")
         self.root.geometry("1200x800")
         self.current_user = None
+        self.game_running = False
 
         # Initialize UI
         self.login_screen()
 
     def login_screen(self):
-        """Create the login screen."""
+        # Create the login screen.
         self.clear_screen()
 
         tk.Label(self.root, text="Login", font=("Arial", 20, "bold")).pack(pady=20)
@@ -63,7 +64,7 @@ class Menu:
 
         tk.Label(self.root, text=f"Welcome, {self.current_user}!", font=("Arial", 20, "bold")).pack(pady=20)
 
-        tk.Label(self.root, text="Be aware some of the game run on terminal!", font=("Arial", 16)).pack(pady=10)
+        tk.Label(self.root, text="Be aware some of the games run on the terminal!", font=("Arial", 16)).pack(pady=10)
 
         # Create a frame for game buttons
         game_frame = tk.Frame(self.root)
@@ -78,6 +79,8 @@ class Menu:
             #     button_image = ImageTk.PhotoImage(Image.open(image_path).resize((50, 50)))
             # else:
             #     button_image = None
+
+            # Close the idea of using picture, too much work and very buggy
 
             # Create button
             button = tk.Button(
@@ -144,7 +147,7 @@ class Menu:
         logout_button.pack()
 
     def create_profile_screen(self):
-        """Create the profile creation screen."""
+        # Create the profile creation screen.
         self.clear_screen()
 
         tk.Label(self.root, text="Create Profile", font=("Arial", 20, "bold")).pack(pady=20)
@@ -161,12 +164,12 @@ class Menu:
         tk.Button(self.root, text="Back to Login", font=("Arial", 14), command=self.login_screen).pack(pady=10)
 
     def clear_screen(self):
-        """Clear all widgets from the screen."""
+        # Clear all widgets from the screen.
         for widget in self.root.winfo_children():
             widget.destroy()
 
     def login(self):
-        """Handle user login."""
+        # Handle user login.
         username = self.username_entry.get()
         password = self.password_entry.get()
 
@@ -202,7 +205,7 @@ class Menu:
             messagebox.showerror("Error", str(e))
 
     def delete_profile(self):
-        """Handle profile deletion."""
+        # Handle profile deletion.
         if messagebox.askyesno("Delete Profile", "Are you sure you want to delete your profile?"):
             try:
                 message = delete_profile(self.current_user)
@@ -213,13 +216,20 @@ class Menu:
 
     def run_game(self, game_func, game_name=None):
         # Run the selected game.
-        print(game_func.__name__)
-        if callable(game_func):
+        # print(game_func.__name__)
+        if self.game_running:
+            messagebox.showwarning("Game Running", "Please finish the current game before starting a new one.")
+            return
+        elif callable(game_func):
             if game_func.__name__ == "simon_main" or game_func.__name__ == "cookie_main":
+                self.game_running = True
                 game_func(self.current_user)
+                self.game_running = False
             else:
+                self.game_running = True
                 score = game_func()
                 save_score(username=self.current_user, game=game_name, score=score)
+                self.game_running = False
             return
         
     def show_score(self):
