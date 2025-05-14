@@ -48,7 +48,7 @@ def play_game():
       # Show current score and board positions
       print(f"\nSCORE - You: {player_score} | Computer: {computer_score}")
       print("\nBoard positions:")
-      print_board([str(i) for i in range(9)])
+      print_board([str(i+1) for i in range(10)])
       print("\nGame starting!")
 
       #  Main game loop
