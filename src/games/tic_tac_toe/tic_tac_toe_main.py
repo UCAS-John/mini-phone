@@ -62,7 +62,7 @@ def play_game():
               while True:
                   #makes sure that their move is actually one of the options open
                   try:
-                      move = int(input("Enter your move (1-9): "))-1
+                      move = int(input("Enter your move (0-8): "))
                       if 0 <= move <= 8 and board[move] == " ":
                           board[move] = current_player
                           break
@@ -75,7 +75,7 @@ def play_game():
           else:
               move = computer(board)
               board[move] = current_player
-              print(f"Computer's move: {move+1}")
+              print(f"Computer's move: {move}")
           
           #Checks if the user or the computer has won
           if check_win(board,current_player):
@@ -95,6 +95,7 @@ def play_game():
               print("\nIt's a tie!")
               print(f"SCORE - You: {player_score} | Computer: {computer_score}")
               break
+
           current_player = "O" if current_player == "X" else "X"
 
       # Ask to play again
@@ -118,6 +119,7 @@ def play_game():
   print('Please return back to the main menu to select another game!')
   return player_score
 
+#Lastly this uses a specific name the computer knows to start the program at the play_game function
 
 if __name__ == "__main__":
    play_game()

@@ -2,6 +2,25 @@ import os
 
 import random
 
+score = 0
+
+question_num = 0
+
+"""ex: to remeber how to do the thing
+
+for _ in range(10):
+  print(fake.name())
+  print(fake.text())"""
+
+#def quetion_easy():
+
+#def quetion_medium():
+
+#def quetion_hard():
+
+#def quetion_impossible():
+
+
 question_num = 0
 
 from faker import Faker
@@ -57,7 +76,9 @@ def impossible(question_num, score):
                         question_num +=1
                     
                         print("your score is: ", score)
-                return score
+                            
+                        return score
+
 def main():
     print("""
 
@@ -99,7 +120,7 @@ def main():
             else: print("brotha it ain't that hard to press space and enter. do it again!! ")
 
         elif difficulty == "2":
-            return score
+             break
         
         else:
              print("you need a real choise not whatever you put in.")
