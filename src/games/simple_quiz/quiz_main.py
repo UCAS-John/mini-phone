@@ -57,9 +57,7 @@ def impossible(question_num, score):
                         question_num +=1
                     
                         print("your score is: ", score)
-                            
-                        return score
-
+                return score
 def main():
     print("""
 
