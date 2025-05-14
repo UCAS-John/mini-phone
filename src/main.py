@@ -7,5 +7,6 @@ def main():
     root.mainloop()
     return app
 
+#Rons the whole program
 if __name__ == "__main__":
     app = main()

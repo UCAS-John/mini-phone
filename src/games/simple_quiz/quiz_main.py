@@ -2,6 +2,25 @@ import os
 
 import random
 
+score = 0
+
+question_num = 0
+
+"""ex: to remeber how to do the thing
+
+for _ in range(10):
+  print(fake.name())
+  print(fake.text())"""
+
+#def quetion_easy():
+
+#def quetion_medium():
+
+#def quetion_hard():
+
+#def quetion_impossible():
+
+
 question_num = 0
 
 from faker import Faker
@@ -10,19 +29,14 @@ fake.name()
 fake.address()
 fake.text()
 
-#the function for the quiz both testing the user and for the score saving
+
 def impossible(question_num, score):
                 while question_num <= 10:
 
                     ans = random.randint(1,4)
 
-                    #defining the quetions
-
-                    print("quetion:")
-                
                     print("quetion:")
                     print(ans)
-
                     print(fake.text())
 
                     print("1:")
@@ -37,8 +51,6 @@ def impossible(question_num, score):
                     print("4:")
                     print(fake.text())
 
-                    #asks and stops them from poor choises
-
                     while True:
                         user_ans = input("sooo what do you think it is?? (pick the number associate with the answer) ").strip()
                         if user_ans.isdigit():
@@ -48,7 +60,6 @@ def impossible(question_num, score):
                             print("bud, choose a number it ain't that hard. 😊")
                             continue
 
-                    #tells them they got it right
 
                     if user_ans == ans:
                         os.system('cls')
@@ -57,9 +68,6 @@ def impossible(question_num, score):
                         os.system('cls')
                         question_num +=1
                         score +=1
-
-                    #tells the they got it wrong
-
                     elif user_ans != ans:
                         os.system('cls')
                         print("well, thats not it but that's not very supprising.")
@@ -69,7 +77,7 @@ def impossible(question_num, score):
                     
                         print("your score is: ", score)
                             
-                return score
+                        return score
 
 def main():
     print("""
@@ -90,8 +98,7 @@ def main():
     score = 0
 
     while True:
-        #tells them about the quiz
-
+        
         if difficulty == "1":
             start = input(""" you chose the impossible level B T doub this one works a little diffrent the first line is the quetion the second is the first answer, third second answer etc. this quiz is close note, internet and friend(s).
                         press space and then enter when you are ready.""")
