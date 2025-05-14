@@ -79,6 +79,7 @@ def main():
             score = 0
             score = word(score)
         elif options == '2':
+            print('Please return back to the main menu to play different games')
             break
         else:
             print("Pick a valid choice.")

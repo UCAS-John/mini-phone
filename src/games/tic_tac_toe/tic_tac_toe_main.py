@@ -115,6 +115,7 @@ def play_game():
       print("Better luck next time! The computer won more games.")
   else:
       print("It's a tie in the overall score!")
+  print('Please return back to the main menu to select another game!')
   return player_score
 
 

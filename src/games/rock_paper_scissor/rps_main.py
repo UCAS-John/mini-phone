@@ -2,7 +2,7 @@ import random
 
 #This is the rock paper scissors game
 def rps_main():
-    print('''
+    print('''\n\n\n\n\n\n\n\n
 
  ______    _______  _______  ___   _    _______  _______  _______  _______  ______      _______  _______  ___   _______  _______  _______  ______    _______ 
 |    _ |  |       ||       ||   | | |  |       ||   _   ||       ||       ||    _ |    |       ||       ||   | |       ||       ||       ||    _ |  |       |
@@ -13,6 +13,8 @@ def rps_main():
 |___|  |_||_______||_______||___| |_|  |___|    |__| |__||___|    |_______||___|  |_|  |_______||_______||___| |_______||_______||_______||___|  |_||_______|
                                                                                                                                                                           
 ''')
+    print('This is just like a normal rock paper scissors game but instead you type in your choice and you are playing against the computer.\n')
+    print('Lets start the game!\n')
     #keeps track of the comp and users score
     score = 0
     comp_score = 0
@@ -63,6 +65,7 @@ def rps_main():
             #Shows the user their final score and saves it to the personal score 
             print('Your final score is:',score)
             print('The computers final score is:', comp_score)
+            print('\nPlease return back to the main menu to play different games')
             return score
         #Error Handling
         else:
