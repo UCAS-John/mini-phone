@@ -22,7 +22,7 @@ def guesser(letters, wordy, score): #This function is the actual game where the 
         
         ask = input("Guess a letter: ").lower()
 
-        if not ask.isalpha() or len(ask) != 1:
+        if not ask.isalpha() or len(ask) != 1: #Checks if theres any letter in the alphabet in ask
             print("Please enter a single alphabet letter.")
             continue
 
