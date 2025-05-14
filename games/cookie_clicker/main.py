@@ -1,9 +1,11 @@
-import os
+import tkinter as tk
+from cookie import CookieClicker
 
-cookie_pic = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "images", "cookie.png")
-
-def main():
-    raise NotImplementedError("This game is not implemented yet.")
+def cookie():
+    root = tk.Tk()
+    app = CookieClicker(root)
+    root.protocol("WM_DELETE_WINDOW", app.on_close)  # Save data on close
+    root.mainloop()
 
 if __name__ == "__main__":
-    main()
+    cookie()
