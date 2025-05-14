@@ -16,7 +16,10 @@ def save_score(username: str, game: _TYPES, score: int):
 
     if not data.loc[data["username"] == username, game].empty:
         current_score = data.loc[data["username"] == username, game].iloc[0]  # Get the first matching value
-        if current_score > int(score):
+        if game == "number guessing":
+            if current_score < score:
+                return
+        if current_score > score:
             pass
         else:
             data.loc[data["username"] == username, game] = score
