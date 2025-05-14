@@ -191,7 +191,7 @@ class CookieClicker:
     def save_and_exit(self):
         # Save the game data and exit the application.
         self.save_data()  # Save the player's data to the CSV file
-        save_score(self.username, "cookie", self.cookies)
+        save_score(self.username, "cookie clicker", self.cookies)
         self.root.destroy()  # Close the application window
 
 if __name__ == "__main__":
