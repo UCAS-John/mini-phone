@@ -81,6 +81,6 @@ def login_profile(username: str, password: str):
     return f"Login successful for {username}."
 
 if __name__ == "__main__":
-    delete_profile("rq")
-    # print(create_profile("rq", "test_password"))
-    # print(login_profile("rq", "test_password"))
+
+    print(create_profile("rq", "test_password"))
+    print(login_profile("rq", "test_password"))

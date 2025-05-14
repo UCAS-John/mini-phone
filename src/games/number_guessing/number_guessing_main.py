@@ -1,9 +1,11 @@
 import random
 
-score = 0
+# import num_gess_score as scores
 
 # Rando mTemplate jus remove it
-def main(score):
+def main():
+
+    score = 0
     rand_num = random.randint(1,1000)
     print("""
 
@@ -14,22 +16,29 @@ def main(score):
 
 """)
     
-    print("welcome to the number guessing game this game is very simple you keep guessing numbers till you get the right one. (if you want to leave at any given point in time input done.)")
-
+    print("welcome to the number guessing game this game is very simple you keep guessing numbers till you get the right one. (if you want to leave at any given point in time input done.)(the numbers are 1-1000)")
+    #main for num guess
     while True:
 
-        num_guess=int(input("what is your guess for the number?? "))
-
-#        if num_guess != int:
-#            print("bud, choose a number it ain't that hard. 😊")
+        while True:
+            try:
+                num_guess=int(input("what is your guess for the number?? "))
+                break
+                #makes sure that the number that the user put in is a number
+            except:
+                print("bud, choose a number it ain't that hard. 😊")
+                continue
         
 
         if num_guess == rand_num:
             print("you got it that was a one in a thousand chance. now you should go find the bible in the code. one of the magic numbers will print the whole bible.")
             print("your score was ",score)
+            return score
+
             break
+        #teams easter eggs
         elif num_guess == 123:
-            print("I wish I could have put the bible here bible, the enitre thing.")
+            print("I wish I could have put the bible here, the enitre thing.")
         elif num_guess == 429:
             print(""" IS that.. glitter on your lips?
                 MMMM cherry flavoured... want a taste?
@@ -53,4 +62,4 @@ def main(score):
             score += 1
 
 if __name__ == "__main__":
-    main(score)
+    score = main()
