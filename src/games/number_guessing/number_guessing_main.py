@@ -17,7 +17,7 @@ def main():
 
 """)
     
-    print("welcome to the number guessing game this game is very simple you keep guessing numbers till you get the right one. (if you want to leave at any given point in time input done.)(the numbers are 1-1000)")
+    print("welcome to the number guessing game this game is very simple you keep guessing numbers till you get the right one. (the numbers are 1-1000)")
 
     while True:
 
