@@ -2,14 +2,14 @@ from faker import Faker
 
 fake = Faker()
 
-def word(score):
+def word(score): #makes a random word and creates the crypted version to display amount of letters
     rand_word = fake.word().lower()
     wordy = list(rand_word)
     letters = ['_|' for _ in wordy]
     score = guesser(letters, wordy, score)
     return score
 
-def guesser(letters, wordy, score):
+def guesser(letters, wordy, score): #This function is the actual game where the user guesses characters
     guessed_letters = set()
     wrong_guesses = 0
     max_wrong = 6
@@ -22,7 +22,7 @@ def guesser(letters, wordy, score):
         
         ask = input("Guess a letter: ").lower()
 
-        if not ask.isalpha() or len(ask) != 1:
+        if not ask.isalpha() or len(ask) != 1: #Checks if theres any letter in the alphabet in ask
             print("Please enter a single alphabet letter.")
             continue
 
@@ -49,12 +49,10 @@ def guesser(letters, wordy, score):
             word(score)
         elif play == 'no' or play == 'n':
             print("Thanks for playing! ")
-            #Call the save score function and save the score
-            return 
+            return score
         else:
             print("PICK A VALID INPUT. Exiting game...")
-            #Call the save score function and save the score
-            return 
+            return score
             
 
 
@@ -65,14 +63,13 @@ def guesser(letters, wordy, score):
             print(ch, end='')
         play= input("\nDo you want to play again (y/n): ").lower()
         if play == 'yes' or play == 'y':
-            word()
+            word(score)
         elif play == 'no' or play == 'n':
             print("Thanks for playing! ")
-            #Call the save score function and save the score
-            return
+            return score
 
-def main():
-    print("insert the hangman font thingy")
+def main(): #Main user interface
+    print("-----HANGMAN-----\n")
     while True:
         options = input("what would you like to do?\n1) play\n2) exit\n")
         if options == '1':
@@ -83,7 +80,6 @@ def main():
             break
         else:
             print("Pick a valid choice.")
-        
     return score
 
 if __name__ == "__main__":
