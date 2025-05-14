@@ -222,9 +222,9 @@ class Menu:
             return
         elif callable(game_func):
             if game_func.__name__ == "simon_main" or game_func.__name__ == "cookie_main":
-                self.game_running = True
-                game_func(self.current_user)
                 self.game_running = False
+                # self.game_running = True
+                game_func(self.current_user)
             else:
                 self.game_running = True
                 score = game_func()
