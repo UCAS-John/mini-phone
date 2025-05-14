@@ -6,10 +6,7 @@ import random
 def main():
 
     score = 0
-<<<<<<< HEAD
-=======
 
->>>>>>> 3522e2cb092a9964cf9d29baafc0772586b217ef
     rand_num = random.randint(1,1000)
     print("""
 
@@ -20,13 +17,8 @@ def main():
 
 """)
     
-<<<<<<< HEAD
     print("welcome to the number guessing game this game is very simple you keep guessing numbers till you get the right one. (if you want to leave at any given point in time input done.)(the numbers are 1-1000)")
-    #main for num guess
-=======
-    print("welcome to the number guessing game this game is very simple you keep guessing numbers till you get the right one. (if you want to leave at any given point in time input done.)(1-1000)")
 
->>>>>>> 3522e2cb092a9964cf9d29baafc0772586b217ef
     while True:
 
         while True:
