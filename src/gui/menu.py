@@ -44,6 +44,22 @@ class Menu:
         # Create the login screen.
         self.clear_screen()
 
+        # Inner function to handle login
+        def login(self=self):
+            username = self.username_entry.get()
+            password = self.password_entry.get()
+
+            try:
+                message = login_profile(username, password)
+                self.current_user = username
+                # messagebox.showinfo("Login Successful", message) # Test
+                self.main_menu()
+            except ValueError as e:
+                messagebox.showerror("Login Failed", str(e))
+            except Exception as e:
+                messagebox.showerror("Error", f"An unexpected error occurred: {str(e)}")
+
+
         tk.Label(self.root, text="Login", font=("Arial", 20, "bold")).pack(pady=20)
 
         tk.Label(self.root, text="Username:", font=("Arial", 14)).pack()
@@ -54,7 +70,7 @@ class Menu:
         self.password_entry = tk.Entry(self.root, font=("Arial", 14), show="*")
         self.password_entry.pack(pady=5)
 
-        tk.Button(self.root, text="Login", font=("Arial", 14), command=self.login).pack(pady=10)
+        tk.Button(self.root, text="Login", font=("Arial", 14), command=login).pack(pady=10)
         tk.Button(self.root, text="Create Profile", font=("Arial", 14), command=self.create_profile_screen).pack(pady=10)
 
     def main_menu(self):
@@ -71,6 +87,25 @@ class Menu:
 
         # Create game buttons with a row limit of 5
         row, col = 0, 0
+
+        # Inner function to run the game
+        def run_game(self=self, game_func=None, game_name=None):
+            # print(game_func.__name__)
+            if self.game_running:
+                messagebox.showwarning("Game Running", "Please finish the current game before starting a new one.")
+                return
+            elif callable(game_func):
+                if game_func.__name__ == "simon_main" or game_func.__name__ == "cookie_main":
+                    self.game_running = False
+                    # self.game_running = True
+                    game_func(self.current_user)
+                else:
+                    self.game_running = True
+                    score = game_func()
+                    save_score(username=self.current_user, game=game_name, score=score)
+                    self.game_running = False
+                return
+        
         for game_name, game_func in GAMES_SCRIPTS.items():
             # Load button image
             # image_path = os.path.join(IMAGE_DIR, f"{game_name.replace(' ', '_').lower()}.png")
@@ -89,7 +124,7 @@ class Menu:
                 compound="top",
                 bg="light blue",                
                 font=("Arial", 12),
-                command=lambda func=game_func, name=game_name: self.run_game(game_func=func, game_name=name)
+                command=lambda func=game_func, name=game_name: run_game(game_func=func, game_name=name)
             )
             # button.image = button_image  # Keep a reference to avoid garbage collection
             button.grid(row=row, column=col, padx=10, pady=10)
@@ -167,21 +202,6 @@ class Menu:
         for widget in self.root.winfo_children():
             widget.destroy()
 
-    def login(self):
-        # Handle user login.
-        username = self.username_entry.get()
-        password = self.password_entry.get()
-
-        try:
-            message = login_profile(username, password)
-            self.current_user = username
-            # messagebox.showinfo("Login Successful", message) # Test
-            self.main_menu()
-        except ValueError as e:
-            messagebox.showerror("Login Failed", str(e))
-        except Exception as e:
-            messagebox.showerror("Error", f"An unexpected error occurred: {str(e)}")
-
     def logout(self):
         # Handle user logout.
         self.current_user = None
@@ -212,24 +232,6 @@ class Menu:
                 self.logout()
             except ValueError as e:
                 messagebox.showerror("Error", str(e))
-
-    def run_game(self, game_func, game_name=None):
-        # Run the selected game.
-        # print(game_func.__name__)
-        if self.game_running:
-            messagebox.showwarning("Game Running", "Please finish the current game before starting a new one.")
-            return
-        elif callable(game_func):
-            if game_func.__name__ == "simon_main" or game_func.__name__ == "cookie_main":
-                self.game_running = False
-                # self.game_running = True
-                game_func(self.current_user)
-            else:
-                self.game_running = True
-                score = game_func()
-                save_score(username=self.current_user, game=game_name, score=score)
-                self.game_running = False
-            return
         
     def show_score(self):
         root = tk.Tk()
