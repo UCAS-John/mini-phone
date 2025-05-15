@@ -33,7 +33,7 @@ pip install Faker
 ## Contributors
 ---
 + Google - helped with small questions and tweak code for better formatting
-+ Copilot - Helped with the layout and provided some aid with errors especially with tkinter. It helped me learn more about making pop up windows.
++ Github Copilot - Helped with the layout and provided some aid with errors especially with tkinter. It helped me learn more about making pop up windows. Also help with code autocomplete save some time writing things repetitively.
 + Dad Saldana - helped Lizzy figure out how to make hangman work with python library Faker. 
 
 ## Authors Information
@@ -45,4 +45,4 @@ My name is Lizzy Saldana, and I am a 15 year old who has to take this coding cla
 
 Yo my name is Gavin, My coding calling is breaking others code. The amount of times I have broken code isnt even funny. I found to many errors but there fixed (I think.)
 
-My name is John, and I am 17 years old. I am an intelluctual and help a lot with others. I also strangely have the ability to read other peoples minds and get things done before they even ask.
+My name is John, and I am 17 years old. I help a lot with others. I also strangely have the ability to read other peoples minds and get things done before they even ask.
