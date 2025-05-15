@@ -28,7 +28,7 @@ Run the program, foll
 ## Contributors
 ---
 + Google - helped with small questions and tweak code for better formatting
-+ Copilot - Helped with the layout and provided me some aid with errors especially with tkinter. It helped me learn more about making pop up windows.
++ Copilot - Helped with the layout and provided some aid with errors especially with tkinter. It helped me learn more about making pop up windows.
 + Dad Saldana - helped Lizzy figure out how to make hangman work with python library Faker. 
 
 ## Authors Information
