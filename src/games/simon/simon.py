@@ -17,8 +17,7 @@ class SimonGame:
         self.player_sequence = []
         self.buttons = []
         self.score = 0
-        self.running = True  # Add a flag to track if the game is running
-        self.pending_after_id = None  # Track the ID of the scheduled `after` callback
+        self.pending_after_id = None  
         self.create_grid()
         self.start_button = tk.Button(root, text="Start Game", command=self.start_game, font=("Arial", 14))
         self.start_button.grid(row=3, column=0, columnspan=3, pady=10)
@@ -41,11 +40,12 @@ class SimonGame:
     def start_game(self):
         # Start the game by resetting the sequence and adding the first pattern.
         if not self.running:
-            self.running = True
+            self.score = 0
             self.sequence = []
             self.player_sequence = []
             self.info_label.config(text="Watch the pattern!")
             self.add_to_sequence()
+            self.running = True
         else:
             return
         
@@ -83,6 +83,7 @@ class SimonGame:
         # Handle the player's input.
         self.player_sequence.append(button)
         self.flash_button(button)
+        time.sleep(0.5)
         if self.player_sequence == self.sequence[:len(self.player_sequence)]:
             if len(self.player_sequence) == len(self.sequence):
                 self.info_label.config(text="Correct! Watch the next pattern!")
@@ -90,9 +91,7 @@ class SimonGame:
                 self.root.after(1000, self.add_to_sequence)
                 self.score += 1
         else:
-            self.info_label.config(text="Wrong! Game Over!")
-            time.sleep(1)
-            self.info_label.config(text=f"You got {self.score} score")
+            self.info_label.config(text=f"Wrong! Game Over!\nYou got {self.score} score")
             self.disable_buttons()
             self.running = False
             scores.save_score(username=self.current_user, game="simon", score=self.score)  # Save the score
