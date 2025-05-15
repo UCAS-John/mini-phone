@@ -26,7 +26,7 @@ GAMES_SCRIPTS = {
     "number guessing": number_guessing_main,
     "rock paper scissors": rps_main,
     "simon": simon_main,
-    "simple quiz": quiz_main,
+    "impossible quiz": quiz_main,
     "tic tac toe": tic_tac_toe_main
 }
 
@@ -64,7 +64,7 @@ class Menu:
 
         tk.Label(self.root, text=f"Welcome, {self.current_user}!", font=("Arial", 20, "bold")).pack(pady=20)
 
-        tk.Label(self.root, text="Be aware some of the game run on terminal!", font=("Arial", 16)).pack(pady=10)
+        tk.Label(self.root, text="Be aware some of the games run on the terminal!", font=("Arial", 16)).pack(pady=10)
 
         # Create a frame for game buttons
         game_frame = tk.Frame(self.root)
@@ -222,9 +222,9 @@ class Menu:
             return
         elif callable(game_func):
             if game_func.__name__ == "simon_main" or game_func.__name__ == "cookie_main":
-                self.game_running = True
-                game_func(self.current_user)
                 self.game_running = False
+                # self.game_running = True
+                game_func(self.current_user)
             else:
                 self.game_running = True
                 score = game_func()

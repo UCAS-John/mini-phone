@@ -14,7 +14,7 @@ Paragraph describing how to use the project
 + Pandas
 `pip install pandas`
 + Tkinter
-`pip install tkinter`
+`pip install tk`
 + Faker 
 `pip install Faker`
 

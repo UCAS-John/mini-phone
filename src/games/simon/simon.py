@@ -2,6 +2,7 @@ import random
 import tkinter as tk
 import os
 import sys
+import time
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "src")))
 from manage import scores
@@ -11,6 +12,7 @@ class SimonGame:
         self.root = root
         self.current_user = current_user    
         self.root.title("Simon Game")
+        self.running = False
         self.sequence = []
         self.player_sequence = []
         self.buttons = []
@@ -38,11 +40,15 @@ class SimonGame:
 
     def start_game(self):
         # Start the game by resetting the sequence and adding the first pattern.
-        self.sequence = []
-        self.player_sequence = []
-        self.info_label.config(text="Watch the pattern!")
-        self.add_to_sequence()
-
+        if not self.running:
+            self.running = True
+            self.sequence = []
+            self.player_sequence = []
+            self.info_label.config(text="Watch the pattern!")
+            self.add_to_sequence()
+        else:
+            return
+        
     def add_to_sequence(self):
         # Add a random button to the sequence and play it.
         row = random.randint(0, 2)
@@ -85,7 +91,10 @@ class SimonGame:
                 self.score += 1
         else:
             self.info_label.config(text="Wrong! Game Over!")
+            time.sleep(1)
+            self.info_label.config(text=f"You got {self.score} score")
             self.disable_buttons()
+            self.running = False
             scores.save_score(username=self.current_user, game="simon", score=self.score)  # Save the score
             return self.score
 
