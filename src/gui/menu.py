@@ -1,7 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
 import os
-from PIL import Image, ImageTk
 import sys
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
