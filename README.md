@@ -12,11 +12,17 @@ Run the program, follow instructions, play games oin pop up window and on termin
 ## Used Technologies
 ---
 + Pandas
-`pip install pandas`
+``sh
+pip install pandas
+``
 + Tkinter
-`pip install tk`
+``sh
+pip install tk
+``
 + Faker 
-`pip install Faker`
+``sh
+pip install Faker
+``
 
 
 ## Curent Features
