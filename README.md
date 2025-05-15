@@ -7,7 +7,7 @@ This program is a series of many games that the user logs in and plays, recievei
 ## Execution and Usage
 ---
 Run the program, follow instructions, play games oin pop up window and on terminal, exit games before trying to run another, and log out when done.
-![image](relative path to image NOTE: Image has to be saved in the repository Reminder: Show what the project looks like when running)  
+![image](images\image.png)  
 
 ## Used Technologies
 ---
