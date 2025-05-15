@@ -26,7 +26,7 @@ GAMES_SCRIPTS = {
     "number guessing": number_guessing_main,
     "rock paper scissors": rps_main,
     "simon": simon_main,
-    "simple quiz": quiz_main,
+    "impossible quiz": quiz_main,
     "tic tac toe": tic_tac_toe_main
 }
 
@@ -222,9 +222,9 @@ class Menu:
             return
         elif callable(game_func):
             if game_func.__name__ == "simon_main" or game_func.__name__ == "cookie_main":
-                self.game_running = True
-                game_func(self.current_user)
                 self.game_running = False
+                # self.game_running = True
+                game_func(self.current_user)
             else:
                 self.game_running = True
                 score = game_func()
