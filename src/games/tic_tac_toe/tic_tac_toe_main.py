@@ -62,7 +62,7 @@ def play_game():
               while True:
                   #makes sure that their move is actually one of the options open
                   try:
-                      move = int(input("Enter your move (1-9): "))
+                      move = int(input("Enter your move (1-9): "))-1
                       if 0 <= move <= 8 and board[move] == " ":
                           board[move] = current_player
                           break
