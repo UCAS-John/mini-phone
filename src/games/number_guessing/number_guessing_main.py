@@ -34,6 +34,7 @@ def main():
         if num_guess == rand_num:
             print("you got it that was a one in a thousand chance. now you should go find the bible in the code. one of the magic numbers will print the whole bible.")
             print("your score was ",score)
+            print("you can now chose a new game")
             return score
 
             break

@@ -58,9 +58,9 @@ def guesser(letters, wordy, score): #This function is the actual game where the 
 
     else:
         print("\nLOSER!💀 You ran out of guesses. The word was:", end=' ')
-        print(f'your score is: ', score) 
         for ch in wordy:
             print(ch, end='')
+        print(f'\nyour score is: ', score) 
         play= input("\nDo you want to play again (y/n): ").lower()
         if play == 'yes' or play == 'y':
             word(score)
@@ -70,6 +70,7 @@ def guesser(letters, wordy, score): #This function is the actual game where the 
 
 def main(): #Main user interface
     print("-----HANGMAN-----\n")
+    score = 0
     while True:
         options = input("what would you like to do?\n1) play\n2) exit\n")
         if options == '1':
