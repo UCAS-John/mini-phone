@@ -7,7 +7,7 @@ This program is a series of many games that the user logs in and plays, recievei
 ## Execution and Usage
 ---
 Run the program, follow instructions, play games oin pop up window and on terminal, exit games before trying to run another, and log out when done.
-![image](images\image.png)  
+![image](https://github.com/UCAS-John/mini-phone/blob/main/images/image.png)  
 
 ## Used Technologies
 ---
