@@ -120,10 +120,11 @@ def main():
             else: print("brotha it ain't that hard to press space and enter. do it again!! ")
 
         elif difficulty == "2":
-             break
+             return score
         
         else:
              print("you need a real choise not whatever you put in.")
 
 if __name__ == "__main__":
     score = main()
+    print(score)

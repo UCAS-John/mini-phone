@@ -16,7 +16,7 @@ def simon_main(cureent_user=None):
     game = SimonGame(root=root, current_user=cureent_user)
     root.protocol("WM_DELETE_WINDOW", game.close_game)  # Ensure safe closing
     root.mainloop()
-    return game.score
+    
 
 if __name__ == "__main__":
     score = simon_main()
