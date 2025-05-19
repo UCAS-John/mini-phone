@@ -124,6 +124,9 @@ def main():
         
         else:
              print("you need a real choise not whatever you put in.")
+             break
+
+    return score
 
 if __name__ == "__main__":
     score = main()
