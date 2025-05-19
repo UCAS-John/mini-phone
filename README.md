@@ -6,6 +6,11 @@ This program is a series of many games that the user logs in and plays, recievei
 
 ## Execution and Usage
 ---
+Either click run program on src/main.py
+or run the following command in the default directory
+```sh
+python src/main.py
+```
 Run the program, follow instructions, play games oin pop up window and on terminal, exit games before trying to run another, and log out when done.
 ![image](https://github.com/UCAS-John/mini-phone/blob/main/images/image.png)  
 
